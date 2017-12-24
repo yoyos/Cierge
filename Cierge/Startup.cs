@@ -147,49 +147,7 @@ namespace Cierge
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // Populate database if parameter Init supplied with t(rue)
-            if (!String.IsNullOrWhiteSpace(Configuration["Init"]) && Configuration["Init"].Contains("t"))
-            {
-                InitializeAsync(app.ApplicationServices, CancellationToken.None).GetAwaiter().GetResult();
-            }
         }
-        
-        private async Task InitializeAsync(IServiceProvider services, CancellationToken cancellationToken)
-        {
-            // Add OpenIddict clients
-            using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-                var iddictManager = scope.ServiceProvider.GetRequiredService<OpenIddictApplicationManager<OpenIddictApplication>>();
-
-                if (await iddictManager.FindByClientIdAsync("client-app", cancellationToken) == null)
-                {
-                    var descriptor = new OpenIddictApplicationDescriptor
-                    {
-                        ClientId = "client-app",
-                        DisplayName = "Client App",
-                        PostLogoutRedirectUris = { new Uri("http://localhost:8000/signout-oidc") },
-                        RedirectUris = { new Uri("http://localhost:8000/signin-oidc") },
-                    };
-
-                    await iddictManager.CreateAsync(descriptor, cancellationToken);
-                }
-
-                // Create roles
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-                string[] roleNames = { "Administrator" };
-                foreach (var roleName in roleNames)
-                {
-                    if (!await roleManager.RoleExistsAsync(roleName))
-                    {
-                        await roleManager.CreateAsync(new IdentityRole(roleName));
-                    }
-                }
-            }
-        }
-        
         public RSAParameters GetRsaSigningKey()
         {
             var path = Configuration["Cierge:RsaSigningKeyJsonPath"];
