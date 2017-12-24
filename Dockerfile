@@ -9,9 +9,14 @@ COPY Cierge .
 ENV ASPNETCORE_ENVIRONMENT Production
 
 
-#COPY ./entrypoint.sh .
-#RUN sed -i.bak 's/\r$//' ./entrypoint.sh
-#RUN chmod +x ./entrypoint.sh
-#CMD /bin/bash ./entrypoint.sh
+COPY ./entrypoint.sh .
+RUN sed -i.bak 's/\r$//' ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
+CMD /bin/bash ./entrypoint.sh
 
-CMD "dotnet run --server.urls=https://localhost:$PORT --no-launch-profile"
+#CMD "dotnet run --server.urls=https://localhost:$PORT --no-launch-profile"
+
+#ENTRYPOINT  ["dotnet", "cierge.dll", "server.urls=https://localhost:$PORT", "no-launch-profile"]
+
+# To deply to heroku, run the following command in this directory (may have to log in first):
+# heroku container:push web --app cierge

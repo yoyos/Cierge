@@ -147,8 +147,11 @@ namespace Cierge
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // TODO refactor & make customizable
-            InitializeAsync(app.ApplicationServices, CancellationToken.None).GetAwaiter().GetResult();
+            // Populate database if parameter Init supplied with t(rue)
+            if (!String.IsNullOrWhiteSpace(Configuration["Init"]) && Configuration["Init"].Contains("t"))
+            {
+                InitializeAsync(app.ApplicationServices, CancellationToken.None).GetAwaiter().GetResult();
+            }
         }
         
         private async Task InitializeAsync(IServiceProvider services, CancellationToken cancellationToken)
