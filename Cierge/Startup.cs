@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Cierge.Data;
 using Cierge.Services;
-using System.Threading;
-using OpenIddict.Core;
-using OpenIddict.Models;
 using AspNet.Security.OpenIdConnect.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
@@ -19,6 +15,8 @@ using Cierge.Filters;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace Cierge
 {
@@ -35,6 +33,15 @@ namespace Cierge
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Disabling HTTPS requirement is default since it is assumed that
+            // this is running behind a reverse proxy that requires HTTPS
+            var requireHttps = !String.IsNullOrWhiteSpace(Configuration["RequireHttps"]) && Boolean.Parse(Configuration["RequireHttps"]) == true;
+
+            if (requireHttps)
+                services.Configure<MvcOptions>(options =>
+                {
+                    options.Filters.Add(new RequireHttpsAttribute());
+                });
 
             services.AddMvc();
 
@@ -82,9 +89,7 @@ namespace Cierge
                        .EnableUserinfoEndpoint("/api/userinfo");
                 options.AllowImplicitFlow();
 
-                // Disabling HTTPS requirement is default since it is assumed that
-                // this is running behind a reverse proxy that requires HTTPS
-                if (!String.IsNullOrWhiteSpace(Configuration["HttpsOptional"]) && Boolean.Parse(Configuration["HttpsOptional"]) == true)
+                if (requireHttps)
                     options.DisableHttpsRequirement();
 
                 if (!Env.IsDevelopment())
@@ -136,6 +141,9 @@ namespace Cierge
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            var options = new RewriteOptions()
+                .AddRedirectToHttps();
 
             app.UseStaticFiles();
 
