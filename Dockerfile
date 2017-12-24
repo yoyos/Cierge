@@ -1,7 +1,7 @@
 FROM microsoft/dotnet:latest
 WORKDIR ./app
 
-COPY PwdLess .
+COPY Cierge .
 
 COPY demo_rsa_signing_key_json /run/secrets/
 

@@ -33,7 +33,7 @@ namespace DemoResourceServer
                 if (Env.IsDevelopment())
                     options.Authority = "http://localhost:9000";
                 else
-                    options.Authority = "https://pwdless.herokuapp.com";
+                    options.Authority = "https://cierge.herokuapp.com";
 
                 options.Audience = "demo-resource-server";
 
