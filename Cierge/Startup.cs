@@ -82,9 +82,10 @@ namespace Cierge
                        .EnableUserinfoEndpoint("/api/userinfo");
                 options.AllowImplicitFlow();
 
-                // Always disabling HTTPS requirement since it is assumed that
+                // Disabling HTTPS requirement is default since it is assumed that
                 // this is running behind a reverse proxy that requires HTTPS
-                options.DisableHttpsRequirement();
+                if (!String.IsNullOrWhiteSpace(Configuration["HttpsOptional"]) && Boolean.Parse(Configuration["HttpsOptional"]) == true)
+                    options.DisableHttpsRequirement();
 
                 if (!Env.IsDevelopment())
                 {
