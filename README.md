@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://cierge.biarity.me" target="_blank">
+    <a href="http://cierge.biarity.me" target="_blank">
     <img alt="Cierge" title="Cierge" src="https://github.com/PwdLess/Cierge-Website/blob/master/Design/LogoBlack.png?raw=true" width="500">
     </a>
 </p>
@@ -56,7 +56,7 @@ That's also a problem with traditional password logins. An attacker can click "f
 
 Cierge sends a magic link as well as a magic code that a user can manually enter into the login screen to continue as an alternative to clicking the link. Magic codes are short, volatile, & memorable (eg. 443 863). For example, you can look up the code on your phone then enter it into your browser on desktop. Note that Cierge also allows external social logins so users can skip emails altogether.
 
-**😫I don't find this convenient enough! What about grey listing!**
+**😫I don't find this convenient enough! And what about grey listing!**
 
 Cierge supports external social logins (eg. Google, Facebook, Twitter, Github, etc.) in addition to email login. Users can use any number of login methods at the same time. Also remember that Cierge is, if anything, more convenient than the now-popular 2FA.
 
