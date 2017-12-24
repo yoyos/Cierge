@@ -4,4 +4,4 @@
     </a>
 </p>
 <p align="center">
-Cierge is an OpenID Connect server that handles user signup, login, profiles, management, and more. Instead of storing passwords, Cirege uses magic links/codes and external logins to authenticate your users.</p>
+Cierge is an OpenID Connect server that <b>handles user signup, login, profiles, management, and more.</b> Instead of storing passwords, Cirege uses <b>magic links/codes and external logins</b> to authenticate your users.</p>
