@@ -3,7 +3,7 @@
 export ASPNETCORE_URLS="http://*:$PORT"
 
 set -e
-run_cmd="dotnet run --server.urls=https://localhost:$PORT --no-launch-profile"
+run_cmd="dotnet run --server.urls=https://localhost:$PORT --no-launch-profile ignoreinitdb=true"
 
 #until dotnet restore && dotnet build; do
 #>&2 echo "No project to restore/build..."

@@ -23,7 +23,7 @@ namespace Cierge
             var host = BuildWebHost(args);
 
             // Don't initialise database if given the IgnoreInitDb argument
-            var ignoreInitDb = args.FirstOrDefault(a => a.ToLower() == "ignoreinitdb");
+            var ignoreInitDb = args.FirstOrDefault(a => a.ToLower().Contains("ignoreinitdb"));
             if (ignoreInitDb == null)
             {
                 using (var scope = host.Services.CreateScope())

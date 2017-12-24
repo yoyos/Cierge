@@ -19,4 +19,7 @@ CMD /bin/bash ./entrypoint.sh
 #ENTRYPOINT  ["dotnet", "cierge.dll", "server.urls=https://localhost:$PORT", "no-launch-profile"]
 
 # To deply to heroku, run the following command in this directory (may have to log in first):
-# heroku container:push web --app cierge
+#	heroku container:push web --app cierge
+
+# To test:
+#	docker build -t cierge .; docker run cierge
