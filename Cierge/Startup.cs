@@ -89,7 +89,7 @@ namespace Cierge
                        .EnableUserinfoEndpoint("/api/userinfo");
                 options.AllowImplicitFlow();
 
-                if (requireHttps)
+                if (!requireHttps)
                     options.DisableHttpsRequirement();
 
                 if (!Env.IsDevelopment())
