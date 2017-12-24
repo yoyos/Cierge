@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://cierge.biarity.me" target="_blank">
-    <img alt="Cierge" title="Cierge" src="https://github.com/PwdLess/Cierge-Website/blob/master/Design/LogoWhite.png?raw=true" width="500">
+    <img alt="Cierge" title="Cierge" src="https://github.com/PwdLess/Cierge-Website/blob/master/Design/LogoBlack.png?raw=true" width="500">
     </a>
 </p>
 <p align="center">
