@@ -24,7 +24,7 @@ Even if your database is compromised, your users won't be.
 
 **😊Users won't have to come up with their 278th password.**
 
-Lack of complex password rules means convince for both you and your users. User won't have to come up with and remember yet another password, and you won't have to worry about password reuse.
+Lack of complex password rules means convenience for both you and your users. User won't have to come up with and remember yet another password, and you won't have to worry about password reuse.
 
 **😊User management**
 
