@@ -120,8 +120,11 @@ namespace Cierge.Controllers
                     // Check to see if user reached max logins
                     if (DidReachMaxLoginsAllowed(userCurrentlySignedIn))
                     {
-                        _notice.AddErrors(ModelState, $"Sorry, you've reached the maximum allowed number of logins ({MaxLoginsAllowed}).");
-                        return View(nameof(Login));
+                        return View(nameof(Login), new LoginViewModel
+                        {
+                            MaxLoginsAllowed = MaxLoginsAllowed,
+                            DidReachMaxLoginsAllowed = true
+                        });
                     }
                     
                     attemptedOperation = AuthOperation.AddingNovelEmail;
@@ -401,6 +404,10 @@ namespace Cierge.Controllers
                         return RedirectToAction(nameof(Lockout));
                 }
 
+                // TODO: what if `await _userManager.FindByLoginAsync(ANY, info.ProviderKey)` exists?
+                //       ie. email of external login is already associated with full account
+                //       currently, to avoid leaking profile existence, this is ignored.
+
                 // The user does not have an account, is attempting to register
                 return View(nameof(Register), new RegisterViewModel
                 {
@@ -431,8 +438,11 @@ namespace Cierge.Controllers
                 // Check to see if user reached max logins
                 if (DidReachMaxLoginsAllowed(userCurrentlySignedIn))
                 {
-                    _notice.AddErrors(ModelState, $"Sorry, you've reached the maximum allowed number of logins ({MaxLoginsAllowed}).");
-                    return View(nameof(Login));
+                    return View(nameof(Login), new LoginViewModel
+                    {
+                        MaxLoginsAllowed = MaxLoginsAllowed,
+                        DidReachMaxLoginsAllowed = true
+                    });
                 }
 
                 // If email is not confirmed then update their unconfirmed email

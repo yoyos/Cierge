@@ -22,7 +22,7 @@
     </h3>
 </div>
 
-@if (SignInManager.IsSignedIn(User) && Model.DidReachMaxLoginsAllowed)
+@if (SignInManager.IsSignedIn(User) && Model != null && Model.DidReachMaxLoginsAllowed)
 {
     <div class="row">
         <div class="column">
