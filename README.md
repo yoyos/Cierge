@@ -10,9 +10,9 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 </p>
 
-<a  href="https://cierge.herokuapp.come" target="_blank"><h3><b>🔑Try out a demo</b></h3></a>
+<a  href="https://cierge.herokuapp.com" target="_blank"><h3><b>🔑Try out a demo</b></h3></a>
 
-<a  href="http://cierge.biarity.me" target="_blank"><h4>🌐 homepage</h4></a>
+<a  href="http://cierge.biarity.me" target="_blank"><h4>🌐Homepage</h4></a>
 
 ---
 
