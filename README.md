@@ -4,21 +4,19 @@
     </a>
 </p>
 <p align="center">
-Cierge is an OpenID Connect server that <b>handles user signup, login, profiles, management, and more.</b> Instead of storing passwords, Cirege uses <b>magic links/codes and external logins</b> to authenticate your users.
+Cierge is an OpenID Connect server that <b>handles user signup, login, profiles, management, and more.</b><br>
+Instead of storing passwords, Cirege uses <b>magic links/codes and external logins</b> to authenticate your users.
 <br />
-<a  href="http://cierge.biarity.me" target="_blank">🌐Visit our website🌐</a>
+
 </p>
 
+<a  href="https://cierge.herokuapp.come" target="_blank"><h3><b>🔑Try out a demo</b></h3></a>
+
+<a  href="http://cierge.biarity.me" target="_blank"><h3>🌐 Our webpage</h3></a>
 
 ---
 
-## Features
-
-add features with screenshot for each in a table?
-
----
-
-## Why Cierge
+## Why 🗝️Cierge
 
 **😊No passwords to hash, no passwords to store.**
 
