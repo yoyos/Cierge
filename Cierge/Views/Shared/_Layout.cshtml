@@ -30,10 +30,10 @@
         @RenderBody()
     </div>
     <footer class="container footer-pad">
-        <a href="@Configuration["Cierge:AppUrl"]">@Configuration["Cierge:AppName"]</a>
+        <a href="@Configuration["Cierge:AppUrl"]" target="_blank">@Configuration["Cierge:AppName"]</a>
         @if (Boolean.Parse(Configuration["Cierge:BeNice"]))
         {
-            <em class="float-right"><a href="https://pwdless.github.io/Cierge-Website/">Powered by Cierge</a></em>
+            <em class="float-right"><a href="https://pwdless.github.io/Cierge-Website/" target="_blank">Powered by Cierge</a></em>
         }
     </footer>
 
