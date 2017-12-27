@@ -89,6 +89,11 @@ namespace Cierge
                        .EnableUserinfoEndpoint("/api/userinfo");
                 options.AllowImplicitFlow();
 
+                // Might need to manually set issuer if running behind reverse proxy
+                var issuer = Configuration["Cierge:Issuer"];
+                if (!String.IsNullOrWhiteSpace(issuer))
+                    options.SetIssuer(new Uri(issuer));
+
                 if (!requireHttps)
                     options.DisableHttpsRequirement();
 
@@ -142,6 +147,7 @@ namespace Cierge
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            // Does not work?
             var options = new RewriteOptions()
                 .AddRedirectToHttps();
 
