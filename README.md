@@ -16,7 +16,7 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 ---
 
-## 🗝️ Why Cierge
+## Why Cierge 🗝️
 
 **😊No passwords to hash, no passwords to store.**
 
@@ -44,7 +44,7 @@ With traditional password systems, a malicious user can try to register with an 
 
 ---
 
-## ⁉️ FAQ
+## FAQ ⁉️
 
 **😟What if a user's email is compromised?**
 
@@ -68,7 +68,7 @@ With traditional password logins, a user would notice if their password has been
 
 ---
 
-## 🎢 Deploying Cierge
+## Deploying Cierge 🎢
 
 Since Cierge is an ASP.NET Core project, you can easily deploy it on any platform (including Linux/Docker/Windows/Mac).
 Just add your [configuration](#configuration) then deploy.
@@ -86,7 +86,7 @@ It is recommended that you run Cierge behind a reverse proxy that requires https
 
 ---
 
-## ⚙️ Configuration
+## Configuration ⚙️
 
 Cierge reads configuration from multiple sources, in this order (later overrides earlier):
 
@@ -147,7 +147,7 @@ Here's a walkthrough of the configuration required by Cierge:
 
 ---
 
-## 📧 Recommended Email Providers
+## Recommended Email Providers 📧
 
 It is recommended that you use a well-known email provider to enhance deilverability. Here are some free ones:
 
