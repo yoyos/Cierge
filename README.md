@@ -65,3 +65,84 @@ Cierge does not have a "change email" feature. Instead, users can "add" or "remo
 **🤔What about breach detection?**
 
 With traditional password logins, a user would notice if their password has been changed. With Cierge, a user would notice if an attacker removed their email from thier logins. In addition, Cierge exposes an easily-accessible read-only event log of everything that has happened to an account (with associated IP addresses & user agents) to aid in breach detection, accessible to account owners and admins.
+
+---
+
+## Deploying Cierge
+
+Deploying Cierge is simple. Just add your [configuration](##configuration) then deploy.
+
+Since Cierge is an ASP.NET Core project, you can easily deploy it on any platform (including Linux/Docker/Windows/Mac).
+
+Guides:
+
+* [ASP.NET Core deployment](https://docs.microsoft.com/en-us/aspnet/core/publishing/?tabs=aspnetcore2x)
+* [Docker guide](https://docs.microsoft.com/en-us/aspnet/core/publishing/docker)
+* [More on .NET Core deployment](https://docs.microsoft.com/en-us/dotnet/core/deploying/)
+
+There is also a [sample Dockerfile](/Dockerfile). 
+For a more complete example on how you'd use Cierge in a multicontianer docker project, check out [Docker Starter](https://github.com/Biarity/DockerStarter).
+
+It is recommended that you run Cierge behind a reverse proxy that requires https.
+
+---
+
+## Configuration
+
+Cierge reads configuration from multiple sources, in this order (later overrides earlier):
+
+* appsettings.json
+* appsettings.<Environment>.json (`<Environment>` is either "Development" or "Production")
+* Environment variables
+* Command-line arguments
+
+For more information on how Cierge reads configuration, check out the [ASP.NET Core 2.0 configuration docs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?tabs=aspnetcore2x#tabpanel_OdIy7kBIBJ_aspnetcore2x).
+
+Here's a walkthrough of the configuration required by Cierge:
+```
+{
+  "ConnectionStrings": {
+    "DefaultConnection": `string: a PostgreSQL connection string.
+	                              [Using a different database provider](https://docs.microsoft.com/en-us/ef/core/providers/)` 
+  },
+  "Recaptcha": {
+    "Secret": `string: reCAPTCHA secret, required`,
+    "SiteKey": `string: reCAPTCHA site key, required`
+  },
+  "ExternalAuth": {
+    "Google": { // only fill these out if you want external Google logins
+      "ClientId": `string`,
+      "ClientSecret": `string`
+    }
+  },
+  "Smtp": { // configuration for email sending
+    "Host": `string`,
+    "Username": `string`,
+    "Password": `string`,
+    "Ssl": `boolean: highly recommended`,
+    "Port": `number`,
+    "From": `string`
+  },
+  "Cierge": {
+    "RsaSigningKeyJsonPath": `string: OIDC RSA signing key, optional, leave empty to generate`,
+    "Issuer": `string: OIDC issuer, optional, useful if running behind reverse proxy`,
+    "RequireHttps": `boolean: leave off if running behind reverse proxy`,
+    "AppName": `string: name of your main website, cosmetic`,
+    "AppUrl": `string: url of your main website, cosmetic`,
+    "Audience": `string: "aud" claim in tokens",
+    "BeNice": `boolean: display "Powered by Cierge"`,
+    "Events": {
+      "MaxStored": `number: maximum number of events stored`,
+      "MaxReturned": `number: maximum number of events displayed per user`
+    },
+    "Logins": {
+      "MaxLoginsAllowed": `number: maximum number of logins allowed per user`
+    }
+  }
+}
+```
+
+* To change the port, use the environment variable `ASPNETCORE_URLS`
+* To pass hierarchical configuration via environment variables or command-line arguments, use a ":" (eg. "Cierge:AppName")
+
+---
