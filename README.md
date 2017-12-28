@@ -152,7 +152,7 @@ Here's a walkthrough of the configuration required by Cierge:
 
 It is recommended that you use a well-known email provider to enhance deilverability. Here are some free ones:
 
-* [MailJet](mailjet.com) (free 6k emails/month)
-* [Mailgun](mailgun.com) (free 10k emails/month)
-* [Sendgrid](sendgrid.com) (free 40k emails/month)
-* [Elastic Mail](elasticmail.com) (free 150k emails/month)
+* [MailJet](https://mailjet.com) (free 6k emails/month)
+* [Mailgun](https://mailgun.com) (free 10k emails/month)
+* [Sendgrid](https://sendgrid.com) (free 40k emails/month)
+* [Elastic Mail](https://elasticmail.com) (free 150k emails/month)
