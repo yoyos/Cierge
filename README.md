@@ -146,11 +146,11 @@ Here's a walkthrough of the configuration required by Cierge:
 * To change the port, use the environment variable `ASPNETCORE_URLS`
 * To pass hierarchical configuration via environment variables or command-line arguments, use a ":" (eg. "Cierge:AppName")
 
-#### Configuring OpenID Connect
+### Configuring OpenID Connect
 
 Cierge uses [OpenIddict](https://github.com/openiddict/openiddict-core) to provide all the OpenID Connect functionality.
 
-You can easily reconfigure OpenIddict by customizing [/Cirege/Startup.cs](/Cirege/Startup.cs) or [/Cirege/Controllers/AuthorizationController.cs](/Cirege/Controllers/AuthorizationController.cs).
+You can easily reconfigure OpenIddict by editing [/Cierge/Startup.cs](/Cierge/Startup.cs) or [/Cierge/Controllers/AuthorizationController.cs](/Cierge/Controllers/AuthorizationController.cs).
 
 ---
 
