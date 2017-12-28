@@ -18,6 +18,10 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 ## Why Cierge 🗝️
 
+**😊Tried & tested - Passwordless is the future.**
+
+Large platforms such as Slack, Medium, Twitter, Yahoo, & Whatsapp are now going passwordless (Slack & Medium using it exclusively).
+
 **😊No passwords to hash, no passwords to store.**
 
 Even if your database is compromised, your users won't be.
