@@ -604,7 +604,7 @@ namespace Cierge.Controllers
 
         private int MaxLoginsAllowed { get
             {
-                return Int32.Parse(_configuration["Cierge:Logins:MaxLoginsAllowed"]);
+                return Int32.Parse(_configuration["Cierge:Logins:MaxLoginsAllowed"] ?? "5");
             } }
 
         private bool DidReachMaxLoginsAllowed(ApplicationUser user)

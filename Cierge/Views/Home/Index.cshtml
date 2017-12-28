@@ -44,7 +44,7 @@
         </a>
     </div>
 </div>
-@if (Int32.Parse(Configuration["Cierge:Events:MaxStored"]) > 0)
+@if (Int32.Parse(Configuration["Cierge:Events:MaxStored"] ?? "50") > 0)
 {
     <div class="row">
         <div class="column">

@@ -25,7 +25,7 @@ namespace Cierge.Services
 
         public async Task<AuthEvent> AddEvent(AuthEventType eventType, string subject, ApplicationUser user = null)
         {
-            var maxEventCount = Int32.Parse(_configuration["Cierge:Events:MaxStored"]);
+            var maxEventCount = Int32.Parse(_configuration["Cierge:Events:MaxStored"] ?? "50");
 
             if (maxEventCount <= 0)
                 return null;
@@ -57,7 +57,7 @@ namespace Cierge.Services
 
         public IList<AuthEvent> GetEvents(ApplicationUser user)
         {
-            var maxReturned = Int32.Parse(_configuration["Cierge:Events:MaxReturned"]);
+            var maxReturned = Int32.Parse(_configuration["Cierge:Events:MaxReturned"] ?? "10");
 
             if (maxReturned <= 0)
                 return null;

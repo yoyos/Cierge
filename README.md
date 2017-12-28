@@ -70,9 +70,8 @@ With traditional password logins, a user would notice if their password has been
 
 ## Deploying Cierge
 
-Deploying Cierge is simple. Just add your [configuration](##configuration) then deploy.
-
 Since Cierge is an ASP.NET Core project, you can easily deploy it on any platform (including Linux/Docker/Windows/Mac).
+Just add your [configuration](#configuration) then deploy.
 
 Guides:
 
@@ -92,18 +91,19 @@ It is recommended that you run Cierge behind a reverse proxy that requires https
 Cierge reads configuration from multiple sources, in this order (later overrides earlier):
 
 * appsettings.json
-* appsettings.<Environment>.json (`<Environment>` is either "Development" or "Production")
+* appsettings.\<Environment\>.json (`<Environment>` is either "Development" or "Production")
 * Environment variables
 * Command-line arguments
 
 For more information on how Cierge reads configuration, check out the [ASP.NET Core 2.0 configuration docs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?tabs=aspnetcore2x#tabpanel_OdIy7kBIBJ_aspnetcore2x).
 
 Here's a walkthrough of the configuration required by Cierge:
+("Recaptcha", "Smtp", & "Cierge:Audience" are the only required ones)
 ```
 {
   "ConnectionStrings": {
     "DefaultConnection": `string: a PostgreSQL connection string.
-	                              [Using a different database provider](https://docs.microsoft.com/en-us/ef/core/providers/)` 
+	                      Using a different database provider: https://docs.microsoft.com/en-us/ef/core/providers/` 
   },
   "Recaptcha": {
     "Secret": `string: reCAPTCHA secret, required`,
@@ -132,11 +132,11 @@ Here's a walkthrough of the configuration required by Cierge:
     "Audience": `string: "aud" claim in tokens",
     "BeNice": `boolean: display "Powered by Cierge"`,
     "Events": {
-      "MaxStored": `number: maximum number of events stored`,
-      "MaxReturned": `number: maximum number of events displayed per user`
+      "MaxStored": `number: maximum number of events stored (default 50)`,
+      "MaxReturned": `number: maximum number of events displayed per user (default 10)`
     },
     "Logins": {
-      "MaxLoginsAllowed": `number: maximum number of logins allowed per user`
+      "MaxLoginsAllowed": `number: maximum number of logins allowed per user (default 5)`
     }
   }
 }
@@ -146,3 +146,12 @@ Here's a walkthrough of the configuration required by Cierge:
 * To pass hierarchical configuration via environment variables or command-line arguments, use a ":" (eg. "Cierge:AppName")
 
 ---
+
+## Recommended Email Providers
+
+It is recommended that you use a well-known email provider to enhance deilverability. Here are some free ones:
+
+* [MailJet](mailjet.com) (free 6k emails/month)
+* [Mailgun](mailgun.com) (free 10k emails/month)
+* [Sendgrid](sendgrid.com) (free 40k emails/month)
+* [Elastic Mail](elasticmail.com) (free 150k emails/month)
