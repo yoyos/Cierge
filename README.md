@@ -98,6 +98,7 @@ Cierge reads configuration from multiple sources, in this order (later overrides
 For more information on how Cierge reads configuration, check out the [ASP.NET Core 2.0 configuration docs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?tabs=aspnetcore2x#tabpanel_OdIy7kBIBJ_aspnetcore2x).
 
 Here's a walkthrough of the configuration required by Cierge:
+
 ("Recaptcha", "Smtp", & "Cierge:Audience" are the only required ones)
 ```
 {
