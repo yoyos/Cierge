@@ -40,7 +40,7 @@ Instead of logging in using email, users can use social logins such as Google, F
 
 **😌Brute forcing is no longer a problem.**
 
-Cierge utilizes reCAPTCHA to ensure magic codes (which expire quickly) are not brute-forceable.
+Cierge utilizes invisible reCAPTCHA to ensure magic codes (which expire quickly) are not brute-forceable.
 
 **😌No profile existence leakage. Actually, no leakage of any kind.**
 
