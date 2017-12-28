@@ -71,7 +71,7 @@ With traditional password logins, a user would notice if their password has been
 ## Deploying Cierge 🎢
 
 Since Cierge is an ASP.NET Core project, you can easily deploy it on any platform (including Linux/Docker/Windows/Mac).
-Just add your [configuration](#configuration) then deploy.
+Just add your [configuration](#configuration-%EF%B8%8F) then deploy.
 
 Guides:
 
