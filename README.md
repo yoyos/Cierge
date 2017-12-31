@@ -157,7 +157,7 @@ Here's a walkthrough of the configuration required by Cierge:
 
 ### Configuring OpenID Connect
 
-Cierge uses [OpenIddict](https://github.com/openiddict/openiddict-core) to provide all the OpenID Connect functionality.
+Cierge uses [OpenIddict](https://github.com/openiddict/openiddict-core) to provide all the OpenID Connect functionality (under the Implicit flow).
 
 You can easily reconfigure OpenIddict by editing [/Cierge/Startup.cs](/Cierge/Startup.cs) or [/Cierge/Controllers/AuthorizationController.cs](/Cierge/Controllers/AuthorizationController.cs).
 
