@@ -39,11 +39,11 @@ Users can edit their profiles and add or remove emails or external logins while 
 
 Instead of logging in using email, users can use social logins such as Google, Facebook, Github, etc. Users can also associate multiple logins for one account. External logins are very easy to setup, for example, to add Google logins simply paste your site key & secret into the configuration and Cierge does the rest!
 
-**😌Fully Stateless*
+**😌Fully Stateless**
 
 Cierge does not store the magic codes in a database. You can generate a code, turn Cierge off & delete all databases, then turn it back on and your token would still be valid if you made it before expiry.
 
-**😌Invisible reCAPTCHA*
+**😌Invisible reCAPTCHA**
 
 Cierge utilizes invisible reCAPTCHA to ensure magic codes (which expire quickly) are not brute-forceable. The reCAPTCHA only appears after multiple wrong attempts at a 6-digit code.
 
