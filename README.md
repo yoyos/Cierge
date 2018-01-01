@@ -171,3 +171,8 @@ It is recommended that you use a well-known email provider to enhance deilverabi
 * [Mailgun](https://mailgun.com) (free 10k emails/month)
 * [Sendgrid](https://sendgrid.com) (free 40k emails/month)
 * [Elastic Mail](https://elasticmail.com) (free 150k emails/month)
+
+## Development & Contribution 💻
+
+You can follow Cierge development at [our GitHub kanban board](https://github.com/PwdLess/Cierge/projects/3). 
+Any contributions highly appreciated!
