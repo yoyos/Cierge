@@ -22,8 +22,7 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 Passwords are [insecure](https://www.entrepreneur.com/article/246902)
 [by](https://www.wired.com/2012/11/ff-mat-honan-password-hacker/)
-[defa](https://blog.codinghorror.com/password-rules-are-bullshit/)
-[ult](https://www.passwordboss.com/password-habits-survey-part-1/). 
+[default](https://blog.codinghorror.com/password-rules-are-bullshit/). 
 Large platforms such as Slack, Medium, Twitter, Yahoo, & Whatsapp are now going passwordless (Slack & Medium using it exclusively).
 
 **😊No passwords to hash, no passwords to store.**
