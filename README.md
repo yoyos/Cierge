@@ -77,6 +77,13 @@ Cierge does not have a "change email" feature. Instead, users can "add" or "remo
 
 With traditional password logins, a user would notice if their password has been changed. With Cierge, a user would notice if an attacker removed their email from thier logins. In addition, Cierge exposes an easily-accessible read-only event log of everything that has happened to an account (with associated IP addresses & user agents) to aid in breach detection, accessible to account owners and admins.
 
+**🤔Can I add additional required profile info?**
+
+Yes! You can easily define enw user profile fields, including ones which are nonoptional.
+
+**🤔Why does Cierge handle profile metadata?**
+
+This allows Cierge to collect any must-have profile information from users when they register.
 ---
 
 ## Deploying Cierge 🎢
@@ -172,7 +179,7 @@ It is recommended that you use a well-known email provider to enhance deilverabi
 * [MailJet](https://mailjet.com) (free 6k emails/month)
 * [Mailgun](https://mailgun.com) (free 10k emails/month)
 * [Sendgrid](https://sendgrid.com) (free 40k emails/month)
-* [Elastic Mail](https://elasticmail.com) (free 150k emails/month)
+* [Elastic Mail](https://elasticemail.com) (free 150k emails/month)
 
 ## Development & Contributing 💻
 
