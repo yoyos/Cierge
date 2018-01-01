@@ -79,7 +79,7 @@ With traditional password logins, a user would notice if their password has been
 
 **🤔Can I add additional required profile info?**
 
-Yes! You can easily define enw user profile fields, including ones which are nonoptional.
+Yes! You can easily define new user profile fields, including one that aren't optional.
 
 **🤔Why does Cierge handle profile metadata?**
 
