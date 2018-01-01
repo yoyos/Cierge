@@ -77,13 +77,9 @@ Cierge does not have a "change email" feature. Instead, users can "add" or "remo
 
 With traditional password logins, a user would notice if their password has been changed. With Cierge, a user would notice if an attacker removed their email from thier logins. In addition, Cierge exposes an easily-accessible read-only event log of everything that has happened to an account (with associated IP addresses & user agents) to aid in breach detection, accessible to account owners and admins.
 
-**🤔Can I add additional required profile info?**
-
-Yes! You can easily define new user profile fields, including one that aren't optional.
-
 **🤔Why does Cierge handle profile metadata?**
 
-This allows Cierge to collect any must-have profile information from users when they register.
+This allows Cierge to collect any must-have profile information from users when they register. You can easily define new fields for storage, but you'll have to work with Cierge's source.
 
 ---
 
@@ -118,7 +114,7 @@ For more information on how Cierge reads configuration, check out the [ASP.NET C
 
 Here's a walkthrough of the configuration required by Cierge:
 
-(`Recaptcha, `Smtp`, & `Cierge:Audience` are the only required ones)
+(`Recaptcha`, `Smtp`, & `Cierge:Audience` are the only required ones)
 ```
 {
   "ConnectionStrings": {
