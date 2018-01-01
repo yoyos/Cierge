@@ -180,7 +180,7 @@ It is recommended that you use a well-known email provider to enhance deilverabi
 * [MailJet](https://mailjet.com) (free 6k emails/month)
 * [Mailgun](https://mailgun.com) (free 10k emails/month)
 * [Sendgrid](https://sendgrid.com) (free 40k emails/month)
-* [Elastic Mail](https://elasticemail.com) (free 150k emails/month)
+* [Elastic Email](https://elasticemail.com) (free 150k emails/month)
 
 ## Development & Contributing 💻
 
