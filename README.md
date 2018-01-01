@@ -108,7 +108,7 @@ For more information on how Cierge reads configuration, check out the [ASP.NET C
 
 Here's a walkthrough of the configuration required by Cierge:
 
-("Recaptcha", "Smtp", & "Cierge:Audience" are the only required ones)
+(`Recaptcha, `Smtp`, & `Cierge:Audience` are the only required ones)
 ```
 {
   "ConnectionStrings": {
@@ -172,7 +172,7 @@ It is recommended that you use a well-known email provider to enhance deilverabi
 * [Sendgrid](https://sendgrid.com) (free 40k emails/month)
 * [Elastic Mail](https://elasticmail.com) (free 150k emails/month)
 
-## Development & Contribution 💻
+## Development & Contributing 💻
 
-You can follow Cierge development at [our GitHub kanban board](https://github.com/PwdLess/Cierge/projects/3). 
+You can follow Cierge development at [our GitHub project board](https://github.com/PwdLess/Cierge/projects/3). 
 Any contributions highly appreciated!
