@@ -20,7 +20,10 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 **😊Tried & tested - Passwordless is the future.**
 
-Passwords are [insecure by default](https://www.passwordboss.com/password-habits-survey-part-1/). 
+Passwords are [insecure](https://www.entrepreneur.com/article/246902)
+[by](https://www.wired.com/2012/11/ff-mat-honan-password-hacker/)
+[defa](https://blog.codinghorror.com/password-rules-are-bullshit/)
+[ult](https://www.passwordboss.com/password-habits-survey-part-1/). 
 Large platforms such as Slack, Medium, Twitter, Yahoo, & Whatsapp are now going passwordless (Slack & Medium using it exclusively).
 
 **😊No passwords to hash, no passwords to store.**
@@ -91,7 +94,7 @@ Guides:
 There is also a [sample Dockerfile](/Dockerfile). 
 For a more complete example on how you'd use Cierge in a multicontianer docker project, check out [Docker Starter](https://github.com/Biarity/DockerStarter).
 
-It is recommended that you run Cierge behind a reverse proxy that requires https.
+It is recommended that you run Cierge behind a reverse proxy that requires https and implements some form of [rate limiting](https://blog.codinghorror.com/rate-limiting-and-velocity-checking/)	.
 
 ---
 
