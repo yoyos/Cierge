@@ -84,6 +84,7 @@ Yes! You can easily define enw user profile fields, including ones which are non
 **🤔Why does Cierge handle profile metadata?**
 
 This allows Cierge to collect any must-have profile information from users when they register.
+
 ---
 
 ## Deploying Cierge 🎢
