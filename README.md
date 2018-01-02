@@ -177,7 +177,7 @@ You can easily reconfigure OpenIddict by editing [/Cierge/Startup.cs](/Cierge/St
 In the demo, you can see a "Favourite Color" user property, demonstrating how you'd implement additional user metadata fields.
 To add a new field, search of the text `FavColor` in Ceirge's source. Add analogous code for your custom field.
 
-* (AccountController)[/Cierge/Controllers/AccountController.cs#L501]
+* [AccountController](/Cierge/Controllers/AccountController.cs#L501)
 
 ---
 
