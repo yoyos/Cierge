@@ -119,7 +119,8 @@ Here's a walkthrough of the configuration required by Cierge:
 {
   "ConnectionStrings": {
     "DefaultConnection": `string: a PostgreSQL connection string.
-	                      Using a different database provider: https://docs.microsoft.com/en-us/ef/core/providers/` 
+	                      [Using a different database provider](https://docs.microsoft.com/en-us/ef/core/providers/).
+						  Don't forget to apply database migrations [`dotnet ef database update`](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/).
   },
   "Recaptcha": {
     "Secret": `string: reCAPTCHA secret, required`,
@@ -168,6 +169,19 @@ Cierge uses [OpenIddict](https://github.com/openiddict/openiddict-core) to provi
 You can easily reconfigure OpenIddict by editing [/Cierge/Startup.cs](/Cierge/Startup.cs) or [/Cierge/Controllers/AuthorizationController.cs](/Cierge/Controllers/AuthorizationController.cs).
 
 ---
+
+## Guides 📔
+
+### Adding a new profile field
+
+In the demo, you can see a "Favourite Color" user property, demonstrating how you'd implement additional user metadata fields.
+To add a new field, search of the text `FavColor` in Ceirge's source. Add analogous code for your custom field.
+
+* (AccountController)[/Cierge/Controllers/AccountController.cs#L501]
+
+---
+
+
 
 ## Recommended Email Providers 📧
 
