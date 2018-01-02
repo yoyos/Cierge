@@ -177,6 +177,8 @@ You can easily reconfigure OpenIddict by editing [/Cierge/Startup.cs](/Cierge/St
 In the demo, you can see a "Favourite Color" user property, demonstrating how you'd implement additional user metadata fields.
 To add a new field, search for the text `FavColor` in Ceirge's source. Add analogous code for your custom field. 
 You will find comments starting with `!! ADDING FIELD:` that explain why a certain line of code might exist.
+Do not edit migration code (you won't find a comment there).
+Don't forget to [add a migration & apply it](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/) once your'e done to update the database.
 
 ---
 
