@@ -16,6 +16,6 @@ namespace Cierge.Data
 
         public string FullName { get; set; }
 
-        public string FavColor { get; set; }
+        public string FavColor { get; set; }  // !! ADDING FIELDS: If you want field to exist
     }
 }

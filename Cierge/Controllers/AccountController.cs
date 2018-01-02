@@ -498,10 +498,12 @@ namespace Cierge.Controllers
                 SecurityStamp = "",
 
                 FullName = model.FullName,
-                FavColor = model.FavColor,
+                FavColor = model.FavColor, // !! ADDING FIELDS: If you want users to input field on register
             };
 
             userEmpty.Email = email;
+
+            //userEmpty.FavColor = "Red"; // !! ADDING FIELDS: If you want to set default value for all registering users
 
             if (info == null) // User trying to register locally
             {
