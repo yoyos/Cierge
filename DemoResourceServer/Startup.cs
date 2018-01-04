@@ -18,12 +18,14 @@ namespace DemoResourceServer
 
         public IConfiguration Configuration { get; }
         public IHostingEnvironment Env { get; }
-        public object OpenIdConnectConstants { get; private set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
+
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -51,6 +53,7 @@ namespace DemoResourceServer
                 app.UseDeveloperExceptionPage();
             }
 
+            // DONT FORGET ME!
             app.UseAuthentication();
 
             app.UseMvc();
