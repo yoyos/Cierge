@@ -75,7 +75,7 @@ Cierge does not have a "change email" feature. Instead, users can "add" or "remo
 
 **🤔What about breach detection?**
 
-With traditional password logins, a user would notice if their password has been changed. With Cierge, a user would notice if an attacker removed their email from thier logins. In addition, Cierge exposes an easily-accessible read-only event log of everything that has happened to an account (with associated IP addresses & user agents) to aid in breach detection, accessible to account owners and admins.
+With traditional password logins, a user would notice if their password has been changed. With Cierge, a user would notice if an attacker removed their email from their logins. In addition, Cierge exposes an easily-accessible read-only event log of everything that has happened to an account (with associated IP addresses & user agents) to aid in breach detection, accessible to account owners and admins.
 
 **🤔Why does Cierge handle profile metadata?**
 
