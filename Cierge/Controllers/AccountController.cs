@@ -53,6 +53,12 @@ namespace Cierge.Controllers
 
         }
 
+        // This is used to sign the TOTP for registering users.
+        // If this value is changed (ie. server restarted), all
+        // rgeistration TOTPs will be invalidated.
+        // TODO: maybe make this a mroe permamnent value for statelessness?
+        private string TemporarySecurityStamp = new Guid().ToString();
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
@@ -100,7 +106,7 @@ namespace Cierge.Controllers
                     {
                         Id = email,
                         Email = email,
-                        SecurityStamp = ""
+                        SecurityStamp = TemporarySecurityStamp
                     };
 
                     attemptedOperation = AuthOperation.Registering;
@@ -223,7 +229,7 @@ namespace Cierge.Controllers
             {
                 Id = email,
                 Email = email,
-                SecurityStamp = ""
+                SecurityStamp = TemporarySecurityStamp
             };
 
             var isTokenValid = false;
