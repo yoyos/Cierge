@@ -29,6 +29,7 @@
             <div asp-validation-summary="All" class="text-danger"></div>
 
             <input asp-for="Logins" type="hidden" value="@Model.Logins" /> <!-- Doesn't actually send a list. You have to recompute. -->
+            <input asp-for="EmailConfirmed" type="hidden" value="@Model.EmailConfirmed" />
 
             <label asp-for="UserName"></label>
             <input asp-for="UserName" />
