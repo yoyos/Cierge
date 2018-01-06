@@ -45,6 +45,10 @@ Instead of logging in using email, users can use social logins such as Google, F
 
 Cierge does not store the magic codes in a database. You can generate a code, turn Cierge off & delete all databases, then turn it back on and your token would still be valid if you made it before expiry.
 
+**😌Use as an SSO**
+
+Since Cierge doesn't care about the rest of your tech stack, you can use the same Cierge server for multiple apps & share users. As a matter of fact, you can use the demo Cierge server for your own apps just fine!
+
 **😌Invisible reCAPTCHA**
 
 Cierge utilizes invisible reCAPTCHA to ensure magic codes (which expire quickly) are not brute-forceable. The reCAPTCHA only appears after multiple wrong attempts at a 6-digit code.
