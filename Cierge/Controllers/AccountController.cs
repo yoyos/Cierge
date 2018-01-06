@@ -501,7 +501,7 @@ namespace Cierge.Controllers
                 UserName = model.UserName,
                 Email = email,
                 DateCreated = DateTimeOffset.UtcNow,
-                SecurityStamp = "",
+                SecurityStamp = TemporarySecurityStamp,
 
                 FullName = model.FullName,
                 FavColor = model.FavColor, // !! ADDING FIELDS: If you want users to input field on register
