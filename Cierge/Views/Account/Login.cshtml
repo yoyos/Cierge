@@ -42,7 +42,7 @@ else
             <div asp-validation-summary="All" class="text-danger"></div>
 
             <label asp-for="Email"></label>
-            <input asp-for="Email" />
+            <input asp-for="Email" id="EmailIn"/>
 
             @if (!SignInManager.IsSignedIn(User))
             {
@@ -126,9 +126,12 @@ else
     <script>
 
         function preventDoubleSubmission(form) {
-            form.submitEmail.innerHTML = "<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;" +
-                                            "Sending...";
-            form.submitEmail.disabled = true;
+            if (form.checkValidity() && document.getElementById("EmailIn").value !== "") {
+                form.submitEmail.innerHTML = "<i class='fa fa-spinner' aria-hidden='true'></i>&nbsp;" +
+                    "Sending...";
+                form.submitEmail.disabled = true;
+            }
+
             return true;
         }
 
