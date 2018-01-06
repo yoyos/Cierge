@@ -14,6 +14,8 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 <a  href="http://cierge.biarity.me" target="_blank"><h4>🌐Homepage</h4></a>
 
+> Feel free to contribute or leave a ⭐ if you like it!
+
 ---
 
 ## Why Cierge 🗝️
