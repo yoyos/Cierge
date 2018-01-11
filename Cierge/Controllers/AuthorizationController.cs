@@ -12,6 +12,7 @@ using OpenIddict.Core;
 using Microsoft.Extensions.Configuration;
 using Cierge.Services;
 using Cierge.Data;
+using System.Security.Claims;
 
 /*
  *  This code is adapted from OpenIddict, which is licensed under Apache 2.0 
@@ -96,6 +97,13 @@ namespace Cierge.Controllers
             // will be used to create an id_token, a token or a code.
             var principal = await _signInManager.CreateUserPrincipalAsync(user);
 
+            var identity = (ClaimsIdentity)principal.Identity;
+
+            // !! ADDING FIELD: this will include FavColor in generated JWT access tokens & id tokens
+            var favColorClaim = new Claim("favColor", user.FavColor?.ToString() ?? "", ClaimValueTypes.String);
+            favColorClaim.SetDestinations(OpenIdConnectConstants.Destinations.AccessToken, OpenIdConnectConstants.Destinations.IdentityToken);
+            identity.AddClaim(favColorClaim);
+
             // Create a new authentication ticket holding the user identity.
             var ticket = new AuthenticationTicket(principal,
                 new AuthenticationProperties(),
@@ -115,7 +123,7 @@ namespace Cierge.Controllers
             // Note: by default, claims are NOT automatically included in the access and identity tokens.
             // To allow OpenIddict to serialize them, you must attach them a destination, that specifies
             // whether they should be included in access tokens, in identity tokens or in both.
-
+            
             foreach (var claim in ticket.Principal.Claims)
             {
                 // Never include the security stamp in the access and identity tokens, as it's a secret value.
@@ -139,7 +147,9 @@ namespace Cierge.Controllers
                 }
 
                 claim.SetDestinations(destinations);
+                
             }
+
 
             return ticket;
         }
