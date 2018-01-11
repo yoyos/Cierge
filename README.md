@@ -14,8 +14,6 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 <a  href="http://cierge.biarity.me" target="_blank"><h4>🌐Homepage</h4></a>
 
-> Feel free to contribute or leave a ⭐ if you like it!
-
 ---
 
 ## Why Cierge 🗝️
@@ -53,7 +51,7 @@ Since Cierge doesn't care about the rest of your tech stack, you can use the sam
 
 **😌Invisible reCAPTCHA**
 
-Cierge utilizes invisible reCAPTCHA to ensure magic codes (which expire quickly) are not brute-forceable. The reCAPTCHA only appears after multiple wrong attempts at a 6-digit code.
+Cierge utilizes invisible reCAPTCHA to ensure magic codes (which expire quickly) are not brute-forceable. The reCAPTCHA only appears after multiple wrong attempts at a 6-digit code. You can make this code longer or diable magic codes and use magic links exclusively if you want.
 
 **😌No profile existence leakage. Actually, no leakage of any kind.**
 
@@ -120,13 +118,13 @@ For more information on how Cierge reads configuration, check out the [ASP.NET C
 
 Here's a walkthrough of the configuration required by Cierge:
 
-(`Recaptcha`, `Smtp`, & `Cierge:Audience` are the only required ones)
+(`ConnectionStrings:DefaultConnection`, `Recaptcha`, `Smtp`, & `Cierge:Audience` are the only required ones)
 ```
 {
   "ConnectionStrings": {
     "DefaultConnection": `string: a PostgreSQL connection string.
-	                      [Using a different database provider](https://docs.microsoft.com/en-us/ef/core/providers/).
-						  Don't forget to apply database migrations [`dotnet ef database update`](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/).
+	                 [Using a different database provider](https://docs.microsoft.com/en-us/ef/core/providers/).
+			 Don't forget to apply database migrations [`dotnet ef database update`](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/).`
   },
   "Recaptcha": {
     "Secret": `string: reCAPTCHA secret, required`,
@@ -147,12 +145,12 @@ Here's a walkthrough of the configuration required by Cierge:
     "From": `string`
   },
   "Cierge": {
-    "RsaSigningKeyJsonPath": `string: OIDC RSA signing key, optional, leave empty to generate`,
+    "RsaSigningKeyJsonPath": `string: OIDC RSA signing json key path (see RsaKeyGenerator), optional, leave empty to generate`,
     "Issuer": `string: OIDC issuer, optional, useful if running behind reverse proxy`,
     "RequireHttps": `boolean: leave off if running behind reverse proxy`,
     "AppName": `string: name of your main website, cosmetic`,
     "AppUrl": `string: url of your main website, cosmetic`,
-    "Audience": `string: "aud" claim in tokens",
+    "Audience": `string: "aud" claim in tokens, required",
     "BeNice": `boolean: display "Powered by Cierge"`,
     "Events": {
       "MaxStored": `number: maximum number of events stored (default 50)`,
