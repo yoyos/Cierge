@@ -51,7 +51,7 @@ Since Cierge doesn't care about the rest of your tech stack, you can use the sam
 
 **😌Invisible reCAPTCHA**
 
-Cierge utilizes invisible reCAPTCHA to ensure magic codes (which expire quickly) are not brute-forceable. The reCAPTCHA only appears after multiple wrong attempts at a 6-digit code. You can make this code longer or diable magic codes and use magic links exclusively if you want.
+Cierge utilizes invisible reCAPTCHA to ensure magic codes (which expire quickly) are not brute-forceable. The reCAPTCHA only appears after multiple wrong attempts at a 6-digit code. You can make this code longer or disable magic codes and use magic links exclusively if you want.
 
 **😌No profile existence leakage. Actually, no leakage of any kind.**
 
@@ -188,7 +188,7 @@ Don't forget to [add a migration & apply it](https://docs.microsoft.com/en-us/ef
 
 ## Recommended Email Providers 📧
 
-It is recommended that you use a well-known email provider to enhance deilverability. Here are some free ones:
+It is recommended that you use a well-known email provider to enhance deliverability. Here are some free ones:
 
 * [MailJet](https://mailjet.com) (free 6k emails/month)
 * [Mailgun](https://mailgun.com) (free 10k emails/month)
