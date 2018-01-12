@@ -11,7 +11,9 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 </p>
 
 <a  href="https://cierge.azurewebsites.net" target="_blank"><h3><b>🔑Try out a demo</b></h3></a>
+
 **13/01/18: our free mailjet account is frozen due to excessive traffic, so you might not get your email.**
+
 <a  href="http://cierge.biarity.me" target="_blank"><h4>🌐Homepage</h4></a>
 
 ---
