@@ -283,7 +283,7 @@ namespace Cierge.Controllers
                 {
                     var token = await _userManager.GenerateUserTokenAsync(userEmpty, "Default", "Register");
 
-                    return base.View(nameof(Register), new RegisterViewModel
+                    return View(nameof(Register), new RegisterViewModel
                     {
                         RememberMe = model.RememberMe,
                         Email = email,

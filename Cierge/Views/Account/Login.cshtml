@@ -26,7 +26,7 @@
 {
     <div class="row">
         <div class="column">
-            <p >Sorry, you've reached the maximum number of logins  allowed (@Model.MaxLoginsAllowed).</p>
+            <p class="text-warning">Sorry, you've reached the maximum number of logins  allowed (@Model.MaxLoginsAllowed).</p>
             <a asp-controller="Manage" asp-action="@nameof(ManageController.Logins)">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;
                 Remove a login add a new one
