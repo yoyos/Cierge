@@ -10,9 +10,11 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 </p>
 
-<a  href="https://cierge.azurewebsites.net" target="_blank"><h3><b>🔑Try out a demo</b></h3></a>
+<a href="https://cierge.azurewebsites.net" target="_blank"><h3><b>🔑Try out a demo</b></h3></a>
 
-<a  href="http://cierge.biarity.me" target="_blank"><h4>🌐Homepage</h4></a>
+<a href="http://cierge.biarity.me" target="_blank"><h4>🌐Homepage</h4></a>
+
+[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/Biarity)
 
 ---
 
@@ -22,8 +24,7 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 Passwords are [insecure](https://www.entrepreneur.com/article/246902)
 [by](https://www.wired.com/2012/11/ff-mat-honan-password-hacker/)
-[default](https://blog.codinghorror.com/password-rules-are-bullshit/). 
-Large platforms such as Slack, Medium, Twitter, Yahoo, & Whatsapp are now going passwordless (Slack & Medium using it exclusively).
+[default](https://blog.codinghorror.com/password-rules-are-bullshit/). Cierge does away by the illusion of security passwords give - "forgot password" usually relies upon email-based auth at the end of the day.
 
 **😊No passwords to hash, no passwords to store.**
 
@@ -51,7 +52,7 @@ Since Cierge doesn't care about the rest of your tech stack, you can use the sam
 
 **😌Invisible reCAPTCHA**
 
-Cierge utilizes invisible reCAPTCHA to ensure magic codes (which expire quickly) are not brute-forceable. The reCAPTCHA only appears after multiple wrong attempts at a 6-digit code. You can make this code longer or diable magic codes and use magic links exclusively if you want.
+Cierge utilizes invisible reCAPTCHA to ensure magic codes (which expire quickly) are not brute-forceable. The reCAPTCHA only appears after multiple wrong attempts at a 6-digit code. You can make this code longer or disable magic codes and use magic links exclusively if you want.
 
 **😌No profile existence leakage. Actually, no leakage of any kind.**
 
@@ -188,7 +189,7 @@ Don't forget to [add a migration & apply it](https://docs.microsoft.com/en-us/ef
 
 ## Recommended Email Providers 📧
 
-It is recommended that you use a well-known email provider to enhance deilverability. Here are some free ones:
+It is recommended that you use a well-known email provider to enhance deliverability. Here are some free ones:
 
 * [MailJet](https://mailjet.com) (free 6k emails/month)
 * [Mailgun](https://mailgun.com) (free 10k emails/month)
