@@ -15,6 +15,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Cierge.Controllers
 {
@@ -282,11 +283,11 @@ namespace Cierge.Controllers
                 {
                     var token = await _userManager.GenerateUserTokenAsync(userEmpty, "Default", "Register");
 
-                    return View(nameof(Register), new RegisterViewModel
+                    return base.View(nameof(Register), new RegisterViewModel
                     {
                         RememberMe = model.RememberMe,
                         Email = email,
-                        UserName = email.Split('@')[0]?.ToLower(),
+                        UserName = GenerateUserName(email),
                         Token = token,
                         ReturnUrl = model.ReturnUrl
                     });
@@ -355,7 +356,6 @@ namespace Cierge.Controllers
             return RedirectToLocal(model.ReturnUrl);
         }
 
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -418,7 +418,7 @@ namespace Cierge.Controllers
                 return View(nameof(Register), new RegisterViewModel
                 {
                     Email = emailFromExternalLoginProvider,
-                    UserName = (nameFromExternalLoginProvider?.Replace(" ","_") ?? emailFromExternalLoginProvider.Split('@')[0]).ToLower(),
+                    UserName = GenerateUserName(nameFromExternalLoginProvider),
                     ExternalLoginProviderDisplayName = info.ProviderDisplayName,
                     ReturnUrl = returnUrl
                 });
@@ -475,9 +475,16 @@ namespace Cierge.Controllers
 
                         return RedirectToLocal(returnUrl);
                     }
+                    else
+                    {
+                        _notice.AddErrors(ModelState, updateResult);
+                    }
+                }
+                else
+                {
+                    _notice.AddErrors(ModelState, addLoginResult);
                 }
 
-                _notice.AddErrors(ModelState);
                 return View(nameof(Login));
             }
 
@@ -536,12 +543,11 @@ namespace Cierge.Controllers
             {
                 userEmpty.EmailConfirmed = false;
             }
-            var createResult = await _userManager.CreateAsync(userEmpty);            
 
+            var createResult = await _userManager.CreateAsync(userEmpty);
             if (createResult.Succeeded)
             {
                 var addLoginResult = await _userManager.AddLoginAsync(userEmpty, info);
-
                 if (addLoginResult.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(model.UserName); // This works because usernames are unique
@@ -561,17 +567,18 @@ namespace Cierge.Controllers
                     await _signInManager.SignInAsync(user, isPersistent: model.RememberMe);
                     return RedirectToLocal(model.ReturnUrl); // Success
                 }
+                else
+                {
+                    _notice.AddErrors(ModelState, addLoginResult);
+                }
             }
             else
             {
-                _notice.AddErrors(ModelState);
-                return View(nameof(Register), model);
+                _notice.AddErrors(ModelState, createResult);
             }
 
 
-            await _userManager.DeleteAsync(userEmpty);
-
-            _notice.AddErrors(ModelState);
+            await _userManager.DeleteAsync(userEmpty); // TODO: make atomic
             return View(nameof(Register), model);
         }
 
@@ -621,6 +628,13 @@ namespace Cierge.Controllers
 
             var userLoginCount = _context.UserLogins.Count(l => l.UserId == user.Id);
             return userLoginCount >= MaxLoginsAllowed;
+        }
+
+        private string GenerateUserName(string name)
+        {
+            name = name.Split("@")[0] ?? "";
+            Regex rgx = new Regex("[^a-zA-Z0-9_-]");
+            return rgx.Replace(name, "").ToLower();
         }
 
         #endregion

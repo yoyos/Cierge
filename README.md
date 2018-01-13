@@ -176,7 +176,7 @@ You can easily reconfigure OpenIddict by editing [/Cierge/Startup.cs](/Cierge/St
 
 ## Guides 📔
 
-### Adding a new profile field
+### Adding a new profile field/claim
 
 In the demo, you can see a "Favourite Color" user property, demonstrating how you'd implement additional user metadata fields.
 To add a new field, search for the text `FavColor` in Ceirge's source. Add analogous code for your custom field. 
