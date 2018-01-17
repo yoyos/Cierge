@@ -20,41 +20,41 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 ## Why Cierge 🗝️
 
-** * Tried & tested - Passwordless is the future.**
+### Tried & tested - Passwordless is the future
 
 Passwords are [insecure](https://www.entrepreneur.com/article/246902)
 [by](https://www.wired.com/2012/11/ff-mat-honan-password-hacker/)
-[default](https://blog.codinghorror.com/password-rules-are-bullshit/). Cierge does away by the illusion of security passwords give - "forgot password" usually relies upon email-based auth at the end of the day.
+[default](https://blog.codinghorror.com/password-rules-are-bullshit/). Cierge does away by the illusion of security passwords give ("forgot password" usually relies upon email-based auth at the end of the day).
 
-**\* No passwords to hash, store, protect, or worry about.**
+### No passwords to hash, store, protect, or worry about
 
 Even if your database is compromised, your users won't be.
 
-**\* Users won't have to come up with their 278th password.**
+### Users won't have to come up with their 278th password
 
 Lack of complex password rules means convenience for both you and your users. User won't have to come up with and remember yet another password, and you won't have to worry about password reuse.
 
-**\* User management**
+### User management
 
 Users can edit their profiles and add or remove emails or external logins while an admin manages it all from the admin panel.
 
-**\*External logins out of the box**
+### External logins out of the box
 
 Instead of logging in using email, users can use social logins such as Google, Facebook, Github, etc. Users can also associate multiple logins for one account. External logins are very easy to setup, for example, to add Google logins simply paste your site key & secret into the configuration and Cierge does the rest!
 
-**\*Fully Stateless**
+### Fully Stateless
 
 Cierge does not store the magic codes in a database. You can generate a code, turn Cierge off & delete all databases, then turn it back on and your token would still be valid if you made it before expiry.
 
-**\*Use as an SSO**
+### Use as an SSO
 
 Since Cierge doesn't care about the rest of your tech stack, you can use the same Cierge server for multiple apps & share users. As a matter of fact, you can use the demo Cierge server for your own apps just fine!
 
-**\*Invisible reCAPTCHA**
+### Invisible reCAPTCHA
 
 Cierge utilizes invisible reCAPTCHA to ensure magic codes (which expire quickly) are not brute-forceable. The reCAPTCHA only appears after multiple wrong attempts at a 6-digit code. You can make this code longer or disable magic codes and use magic links exclusively if you want.
 
-**\*No profile existence leakage. Actually, no leakage of any kind.**
+### No profile existence leakage. Actually, no leakage of any kind.
 
 With traditional password systems, a malicious user can try to register with an email to find out if it exists. With Cierge, 0 data is leaked about users or if they exist - until authenticated. This comes naturally since Cierge makes little distinction between registration and login.
 
