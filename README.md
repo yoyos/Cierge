@@ -216,4 +216,4 @@ It is recommended that you use a well-known email provider to enhance deliverabi
 You can follow Cierge development at [our GitHub project board](https://github.com/PwdLess/Cierge/projects/3). Or on [twitter](https://twitter.com/Biarity).
 
 ## License & Contributing 📝
-Cierge is licensed under Apcahe 2.0. Cierge uses OpenIddict for OpenID Connect functionality, which is also licensed under Apchae 2.0. Any contributions highly appreciated!
+Cierge is licensed under Apache 2.0. Cierge uses OpenIddict for OpenID Connect functionality, which is also licensed under Apache 2.0. Any contributions highly appreciated!
