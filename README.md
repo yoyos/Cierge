@@ -175,7 +175,7 @@ You can easily reconfigure OpenIddict by editing [/Cierge/Startup.cs](/Cierge/St
 
 ---
 
-## Guides 📔
+## More 📔
 
 ### Adding a new profile field/claim
 
@@ -185,6 +185,16 @@ You will find comments starting with `!! ADDING FIELD:` that explain why a certa
 Do not edit migration code (you won't find a comment there).
 Don't forget to [add a migration & apply it](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/) once you're done, to update the database.
 
+### Supporting more external login providers
+
+Check out the [ASP.NET Core external authentication guide](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/)
+
+### Cierge vs Portier vs PwdLess
+
+* Unlike PwdLess & Portier, Cierge handles user management, a variety of external logins, and a frontend (more like an SSO).
+* Portier is an email-based authentication server that *only* handles authentication (ie. no user management). 
+Cierge might progressively implement parts of the Portier spec as it develops for standradization.
+* PwdLess is an API-only passwordless authenitcation server that does not implement OIDC, as such it is very easy to pick up
 ---
 
 ## Recommended Email Providers 📧
