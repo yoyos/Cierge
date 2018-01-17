@@ -171,7 +171,7 @@ namespace Cierge.Controllers
 
             // Add a space every 3 characters for readability
             token = String.Concat(token.SelectMany((c, i)
-                                            => (i+1) % 3 == 0 ? $"{c} " : $"{c}"));
+                                            => (i+1) % 3 == 0 ? $"{c} " : $"{c}")).Trim();
 
             var callbackUrl = Url.TokenInputLink(Request.Scheme,
                 new TokenInputViewModel
