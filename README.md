@@ -195,6 +195,11 @@ Check out the [ASP.NET Core external authentication guide](https://docs.microsof
 * Portier is an email-based authentication server that *only* handles authentication (ie. no user management). 
 Cierge might progressively implement parts of the Portier spec as it develops for standradization.
 * PwdLess is an API-only passwordless authenitcation server that does not implement OIDC, as such it is very easy to pick up
+
+### Get your Cierge project featured
+
+Feel free to email `admin at biarity dot me` if you made a project that uses Cierge for authenitcation and want to get it listed here.
+
 ---
 
 ## Recommended Email Providers 📧
@@ -206,7 +211,9 @@ It is recommended that you use a well-known email provider to enhance deliverabi
 * [Sendgrid](https://sendgrid.com) (free 40k emails/month)
 * [Elastic Email](https://elasticemail.com) (free 150k emails/month)
 
-## Development & Contributing 💻
+## Follow development 💻
 
-You can follow Cierge development at [our GitHub project board](https://github.com/PwdLess/Cierge/projects/3). 
-Any contributions highly appreciated!
+You can follow Cierge development at [our GitHub project board](https://github.com/PwdLess/Cierge/projects/3). Or on [twitter](https://twitter.com/Biarity).
+
+# License & Contributing 📝
+Cierge is licensed under Apcahe 2.0. Cierge uses OpenIddict for OpenID Connect functionality, which is also licensed under Apchae 2.0. Any contributions highly appreciated!
