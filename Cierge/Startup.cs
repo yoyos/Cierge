@@ -17,6 +17,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Cierge
 {
@@ -138,6 +139,26 @@ namespace Cierge
             services.AddScoped<NoticeService>();
 
             services.AddScoped<EventsService>();
+
+            // Allow JWT bearer authentication (for API calls)
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                if (Env.IsDevelopment())
+                    options.Authority = "http://localhost:9000";
+                else
+                    options.Authority = "https://cierge.azurewebsites.net";
+
+                options.Audience = Configuration["Cierge:Audience"];
+
+                if (Env.IsDevelopment())
+                    options.RequireHttpsMetadata = false;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
