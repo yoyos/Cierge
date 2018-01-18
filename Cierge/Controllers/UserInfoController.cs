@@ -23,7 +23,7 @@ namespace AuthorizationServer.Controllers
 
         //
         // GET: /api/userinfo
-        [Authorize(AuthenticationSchemes = OAuthValidationDefaults.AuthenticationScheme)]
+        [Authorize]
         [HttpGet("userinfo"), Produces("application/json")]
         public async Task<IActionResult> Userinfo()
         {
@@ -41,8 +41,7 @@ namespace AuthorizationServer.Controllers
             
             // !! ADDING FIELD: this will include FavColor in the OIDC userinfo endpoint
             var favColor = user.FavColor?.ToString() ?? "";
-            var favColorClaim = new Claim("favColor", favColor, ClaimValueTypes.String);
-            claims[favColorClaim] = favColor;
+            claims.Add("favColor", favColor);
 
             // Note: the "sub" claim is a mandatory claim and must be included in the JSON response.
             claims[OpenIdConnectConstants.Claims.Subject] = await _userManager.GetUserIdAsync(user);

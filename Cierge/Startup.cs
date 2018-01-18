@@ -113,7 +113,13 @@ namespace Cierge
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             });
 
-            //services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("http://localhost:8000")
+                                .AllowAnyMethod()
+                                .AllowAnyHeader());
+            });
 
             if (Env.IsDevelopment())
             {
@@ -150,6 +156,8 @@ namespace Cierge
             // Does not work?
             var options = new RewriteOptions()
                 .AddRedirectToHttps();
+
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseStaticFiles();
 

@@ -59,7 +59,7 @@ namespace Cierge
                     var descriptor = new OpenIddictApplicationDescriptor
                     {
                         ClientId = "client-app",
-                        DisplayName = "Client App",
+                        DisplayName = "Test Client App",
                         PostLogoutRedirectUris = { new Uri("http://localhost:8000/signout-oidc") },
                         RedirectUris = { new Uri("http://localhost:8000/signin-oidc") },
                     };
