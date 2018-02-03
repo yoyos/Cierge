@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Cierge
 {
@@ -27,10 +28,12 @@ namespace Cierge
         {
             Configuration = configuration;
             Env = env;
+            SigningKey = new RsaSecurityKey(GetRsaSigningKey());
         }
 
         public IConfiguration Configuration { get; }
         public IHostingEnvironment Env { get; }
+        public SecurityKey SigningKey { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -63,6 +66,7 @@ namespace Cierge
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+            
 
             if (!String.IsNullOrWhiteSpace(Configuration["ExternalAuth:Google:ClientId"]))
             {
@@ -90,6 +94,8 @@ namespace Cierge
                        .EnableUserinfoEndpoint("/api/userinfo");
                 options.AllowImplicitFlow();
 
+                options.SetAccessTokenLifetime(new TimeSpan(1, 0, 0));
+
                 // Might need to manually set issuer if running behind reverse proxy
                 var issuer = Configuration["Cierge:Issuer"];
                 if (!String.IsNullOrWhiteSpace(issuer))
@@ -104,14 +110,9 @@ namespace Cierge
                 }
                 else
                 {
-                    options.AddSigningKey(new RsaSecurityKey(GetRsaSigningKey()));
+                    options.AddSigningKey(SigningKey);
                 }
                 options.UseJsonWebTokens();
-            });
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             });
 
             services.AddCors(options =>
@@ -147,17 +148,25 @@ namespace Cierge
             {
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(options =>
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false, // TODO: make configurable
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = SigningKey
+                    };
+
+                    options.Audience = Configuration["Cierge:Audience"];
+
+                    if (Env.IsDevelopment())
+                        options.RequireHttpsMetadata = false;
+                });
+
+            // Allow cross-site cookies 
+            services.ConfigureApplicationCookie(options =>
             {
-                if (Env.IsDevelopment())
-                    options.Authority = "http://localhost:9000";
-                else
-                    options.Authority = "https://cierge.azurewebsites.net";
-
-                options.Audience = Configuration["Cierge:Audience"];
-
-                if (Env.IsDevelopment())
-                    options.RequireHttpsMetadata = false;
+                options.Cookie.SameSite = SameSiteMode.None;
             });
         }
 
@@ -173,10 +182,6 @@ namespace Cierge
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
-            // Does not work?
-            var options = new RewriteOptions()
-                .AddRedirectToHttps();
 
             app.UseCors("AllowSpecificOrigin");
 

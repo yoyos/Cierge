@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2003
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE2672E7-A919-4E26-BEC3-AEBB50101990}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,6 +16,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoResourceServer", "DemoResourceServer\DemoResourceServer.csproj", "{73093991-957B-456E-B6C9-58239BE1E0BE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cierge", "Cierge\Cierge.csproj", "{4AF8B534-2FFE-4A9B-994D-B5B716BC50CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoClient", "DemoClient\DemoClient.csproj", "{2A389388-EBD1-453A-9821-C3FF93DEF4F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{4AF8B534-2FFE-4A9B-994D-B5B716BC50CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AF8B534-2FFE-4A9B-994D-B5B716BC50CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AF8B534-2FFE-4A9B-994D-B5B716BC50CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A389388-EBD1-453A-9821-C3FF93DEF4F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A389388-EBD1-453A-9821-C3FF93DEF4F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A389388-EBD1-453A-9821-C3FF93DEF4F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A389388-EBD1-453A-9821-C3FF93DEF4F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Authentication;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h2>
+        Logged-in user details:
+    </h2>
+    <div>
+        
+    </div>
+    <dl>
+        @foreach (var claim in User.Claims)
+        {
+            <dt>@claim.Type</dt>
+            <dd>@claim.Value</dd>
+        }        
+        <dt>Id Token</dt>
+        <dd>@Model.IdToken</dd>
+        <dt>Access Token</dt>
+        <dd>@Model.AccessToken</dd>
+    </dl>
+}
+else
+{
+    <h1>
+        Get started by logging in.
+    </h1>
+}

@@ -50,6 +50,7 @@ namespace AuthorizationServer.Controllers
             {
                 claims[OpenIdConnectConstants.Claims.Email] = await _userManager.GetEmailAsync(user);
                 claims[OpenIdConnectConstants.Claims.EmailVerified] = await _userManager.IsEmailConfirmedAsync(user);
+                claims[OpenIdConnectConstants.Claims.Name] = await _userManager.GetUserNameAsync(user);
             }
 
             if (User.HasClaim(OpenIdConnectConstants.Claims.Scope, OpenIdConnectConstants.Scopes.Phone))
