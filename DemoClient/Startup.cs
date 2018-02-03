@@ -43,12 +43,13 @@ namespace DemoClient
                 options.ResponseType = OpenIdConnectResponseType.IdTokenToken;
                 options.SaveTokens = true;
                 options.GetClaimsFromUserInfoEndpoint = true;
-                //options.ClaimActions.Clear();
+                // !! ADDING FIELD: this will include FavColor in included claims   
                 options.ClaimActions.MapUniqueJsonKey("favColor", "favColor");
                 options.Scope.Add("profile");
                 options.Scope.Add("openid");
                 options.Scope.Add("email");
                 options.Scope.Add("roles");
+                //options.ClaimActions.Clear();
                 options.CallbackPath = new PathString("/signin-oidc");
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
