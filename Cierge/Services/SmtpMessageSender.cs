@@ -31,7 +31,7 @@ namespace Cierge.Services
         {
             using (var mailMessage = new MailMessage
             {
-                From = new MailAddress(_configuration["Smtp:From"]),
+                From = new MailAddress(RandomizeEmail(_configuration["Smtp:From"])),
                 Subject = subject,
                 Body = message,
                 IsBodyHtml = true
@@ -39,6 +39,20 @@ namespace Cierge.Services
             {
                 mailMessage.To.Add(email);
                 await _client.SendMailAsync(mailMessage);
+            }
+        }
+
+        private string RandomizeEmail(string email)
+        {
+            if (Boolean.Parse(_configuration["Smtp:RandomizeFrom"]))
+            {
+                // Optimizing for speed. Does not need to be crypto-secure.
+                var randomChars = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                return email.Replace("@", $"-{randomChars}@");
+            }
+            else
+            {
+                return email;
             }
         }
     }
