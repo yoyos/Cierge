@@ -195,7 +195,7 @@ Check out the [ASP.NET Core external authentication guide](https://docs.microsof
 * Unlike PwdLess & Portier, Cierge handles user management, a variety of external logins, and a frontend (more like an SSO).
 * Portier is an email-based authentication server that *only* handles authentication (ie. no user management). 
 Cierge might progressively implement parts of the Portier spec as it develops for standradization.
-* PwdLess is an API-only passwordless authenitcation server that does not implement OIDC, as such it is very easy to pick up
+* PwdLess is an API-only passwordless authentication server that does not implement OIDC, as such it is easier to pick up
 
 ### Get your Cierge project featured
 
