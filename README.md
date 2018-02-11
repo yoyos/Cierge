@@ -26,7 +26,7 @@ Passwords are [insecure](https://www.entrepreneur.com/article/246902)
 [by](https://www.wired.com/2012/11/ff-mat-honan-password-hacker/)
 [default](https://blog.codinghorror.com/password-rules-are-bullshit/). Cierge does away by the illusion of security passwords give ("forgot password" usually relies upon email-based auth at the end of the day).
 
-### No passwords to hash, store, protect, or worry about
+### No passwords to hash, salt, store, protect, or worry about
 
 Even if your database is compromised, your users won't be.
 
@@ -102,7 +102,7 @@ Guides:
 There is also a [sample Dockerfile](/Dockerfile). 
 For a more complete example on how you'd use Cierge in a multicontianer docker project, check out [Docker Starter](https://github.com/Biarity/DockerStarter).
 
-It is recommended that you run Cierge behind a reverse proxy that requires https and implements some form of [rate limiting](https://blog.codinghorror.com/rate-limiting-and-velocity-checking/)	.
+It is recommended that you run Cierge behind a reverse proxy that requires https and implements some form of [rate limiting](https://blog.codinghorror.com/rate-limiting-and-velocity-checking/).
 
 ---
 
@@ -143,7 +143,8 @@ Here's a walkthrough of the configuration required by Cierge:
     "Password": `string`,
     "Ssl": `boolean: highly recommended`,
     "Port": `number`,
-    "From": `string`
+    "From": `string`,
+    "RandomizeFrom": `boolean: allow addition of random characters before the @ symbol - see issue #18`
   },
   "Cierge": {
     "RsaSigningKeyJsonPath": `string: OIDC RSA signing json key path (see RsaKeyGenerator), optional, leave empty to generate`,
