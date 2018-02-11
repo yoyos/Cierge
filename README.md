@@ -143,7 +143,8 @@ Here's a walkthrough of the configuration required by Cierge:
     "Password": `string`,
     "Ssl": `boolean: highly recommended`,
     "Port": `number`,
-    "From": `string`
+    "From": `string`,
+    "RandomizeFrom": `boolean: allow addition of random characters before the @ symbol - see issue #18`
   },
   "Cierge": {
     "RsaSigningKeyJsonPath": `string: OIDC RSA signing json key path (see RsaKeyGenerator), optional, leave empty to generate`,
