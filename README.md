@@ -22,9 +22,7 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 ### Tried & tested - Passwordless is the future
 
-Passwords are [insecure](https://www.entrepreneur.com/article/246902)
-[by](https://www.wired.com/2012/11/ff-mat-honan-password-hacker/)
-[default](https://blog.codinghorror.com/password-rules-are-bullshit/). Cierge does away by the illusion of security passwords give ("forgot password" usually relies upon email-based auth at the end of the day).
+Passwords are [insecure by default](https://biarity.gitlab.io/2018/02/23/passwordless/). Cierge does away by the illusion of security passwords give ("forgot password" usually relies upon email-based auth at the end of the day).
 
 ### No passwords to hash, salt, store, protect, or worry about
 
