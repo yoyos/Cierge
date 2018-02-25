@@ -70,9 +70,9 @@ That's also a problem with traditional password logins. An attacker can click "f
 
 Cierge sends a magic link as well as a magic code that a user can manually enter into the login screen to continue as an alternative to clicking the link. Magic codes are short, volatile, & memorable (eg. 443 863). For example, you can look up the code on your phone then enter it into your browser on desktop. Note that Cierge also allows external social logins so users can skip emails altogether.
 
-**😫I don't find this convenient enough! And what about grey listing!**
+**😫I don't find this convenient enough!**
 
-Cierge supports external social logins (eg. Google, Facebook, Twitter, Github, etc.) in addition to email login. Users can use any number of login methods at the same time. Also remember that Cierge is, if anything, more convenient than the now-popular 2FA.
+Cierge supports external social logins (eg. Google, Facebook, Twitter, Github, etc.) in addition to email login. Users can use any number of login methods at the same time. Also remember that Cierge is, if anything, more convenient than the now-popular 2FA. 
 
 **🤔How does Cierge handle changing emails?**
 
@@ -81,6 +81,14 @@ Cierge does not have a "change email" feature. Instead, users can "add" or "remo
 **🤔What about breach detection?**
 
 With traditional password logins, a user would notice if their password has been changed. With Cierge, a user would notice if an attacker removed their email from their logins. In addition, Cierge exposes an easily-accessible read-only event log of everything that has happened to an account (with associated IP addresses & user agents) to aid in breach detection, accessible to account owners and admins.
+
+**🤔What measures are in place to prevent an attacker from fully compromising an account?**
+
+Cierge's next version will implement security lock periods for removing logins - for example: "an email login that has existed for at least 60 days will require at least 30 days to be removed, otherwise, it can be removed instantly". This will prevent an attacker from removing the user's email (and locking them out) whilst also preventing them from adding their own email. In addition, notification emails will be sent to the user whenever account settings have been changed.
+
+**🤔What about users that use greylisting?**
+
+Greylisting also affects passwordful systems. User emails *should* always be verified before allowing the user to do anything of significance.  
 
 **🤔Why does Cierge handle profile metadata?**
 
