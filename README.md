@@ -14,7 +14,7 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 <a href="http://cierge.biarity.me" target="_blank"><h4>🌐Homepage</h4></a>
 
-[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/Biarity)
+[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/Biarity)
 
 ---
 
