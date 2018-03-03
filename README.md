@@ -87,9 +87,9 @@ With traditional password logins, a user would notice if their password has been
 
 Cierge's next version will implement security lock periods for removing logins - for example: "an email login that has existed for at least 60 days will require at least 30 days to be removed, otherwise, it can be removed instantly". This will prevent an attacker from removing the user's email (and locking them out) whilst also preventing them from adding their own email. In addition, notification emails will be sent to the user whenever account settings have been changed.
 
-**🤔What about users that use greylisting?**
+**🤔What about email greylisting?**
 
-Greylisting also affects passwordful systems. User emails *should always be verified* before allowing the user to do anything of significance. Cierge also supports external logins using so email is not a necessity.
+Greylisting also affects passwordful systems. User emails *should always be verified* before allowing the user to do anything of significance. Cierge also supports external logins so using email is not a necessity.
 
 **🤔Why does Cierge handle profile metadata?**
 
