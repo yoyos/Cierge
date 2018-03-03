@@ -89,7 +89,7 @@ Cierge's next version will implement security lock periods for removing logins -
 
 **🤔What about users that use greylisting?**
 
-Greylisting also affects passwordful systems. User emails *should* always be verified before allowing the user to do anything of significance. Cierge also supports external logins using email is not a necessity.
+Greylisting also affects passwordful systems. User emails *should always be verified* before allowing the user to do anything of significance. Cierge also supports external logins using so email is not a necessity.
 
 **🤔Why does Cierge handle profile metadata?**
 
