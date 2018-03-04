@@ -56,8 +56,8 @@ namespace Cierge.Controllers
 
         // This is used to sign the TOTP for registering users.
         // If this value is changed (ie. server restarted), all
-        // rgeistration TOTPs will be invalidated.
-        // TODO: maybe make this a mroe permamnent value for statelessness?
+        // registration TOTPs will be invalidated.
+        // TODO: maybe make this a more permamnent value for statelessness?
         private string TemporarySecurityStamp = new Guid().ToString();
 
         [HttpGet]
