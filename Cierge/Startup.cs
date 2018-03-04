@@ -104,7 +104,7 @@ namespace Cierge
                 if (!requireHttps)
                     options.DisableHttpsRequirement();
 
-                if (!Env.IsDevelopment())
+                if (Env.IsDevelopment())
                 {
                     options.AddEphemeralSigningKey();
                 }

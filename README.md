@@ -14,7 +14,9 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 
 <a href="http://cierge.biarity.me" target="_blank"><h4>🌐Homepage</h4></a>
 
-[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/Biarity)
+<a href="https://biarity.gitlab.io/2018/02/23/passwordless" target="_blank"><h5>❓Why passwordless</h4></a>
+
+[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/Biarity)
 
 ---
 
@@ -23,8 +25,7 @@ Instead of storing passwords, Cirege uses <b>magic links/codes and external logi
 ### Tried & tested - Passwordless is the future
 
 Passwords are [insecure](https://www.entrepreneur.com/article/246902)
-[by](https://www.wired.com/2012/11/ff-mat-honan-password-hacker/)
-[default](https://blog.codinghorror.com/password-rules-are-bullshit/). Cierge does away by the illusion of security passwords give ("forgot password" usually relies upon email-based auth at the end of the day).
+ [by](https://www.wired.com/2012/11/ff-mat-honan-password-hacker/) [default](https://blog.codinghorror.com/password-rules-are-bullshit/). Cierge does away by the illusion of security passwords give ("forgot password" usually relies upon email-based auth at the end of the day).
 
 ### No passwords to hash, salt, store, protect, or worry about
 
@@ -70,9 +71,9 @@ That's also a problem with traditional password logins. An attacker can click "f
 
 Cierge sends a magic link as well as a magic code that a user can manually enter into the login screen to continue as an alternative to clicking the link. Magic codes are short, volatile, & memorable (eg. 443 863). For example, you can look up the code on your phone then enter it into your browser on desktop. Note that Cierge also allows external social logins so users can skip emails altogether.
 
-**😫I don't find this convenient enough! And what about grey listing!**
+**😫I don't find this convenient enough!**
 
-Cierge supports external social logins (eg. Google, Facebook, Twitter, Github, etc.) in addition to email login. Users can use any number of login methods at the same time. Also remember that Cierge is, if anything, more convenient than the now-popular 2FA.
+Cierge supports external social logins (eg. Google, Facebook, Twitter, Github, etc.) in addition to email login. Users can use any number of login methods at the same time. Also remember that Cierge is, if anything, more convenient than the now-popular 2FA. 
 
 **🤔How does Cierge handle changing emails?**
 
@@ -81,6 +82,14 @@ Cierge does not have a "change email" feature. Instead, users can "add" or "remo
 **🤔What about breach detection?**
 
 With traditional password logins, a user would notice if their password has been changed. With Cierge, a user would notice if an attacker removed their email from their logins. In addition, Cierge exposes an easily-accessible read-only event log of everything that has happened to an account (with associated IP addresses & user agents) to aid in breach detection, accessible to account owners and admins.
+
+**🤔What measures are in place to prevent an attacker from fully compromising an account?**
+
+Cierge's next version will implement security lock periods for removing logins - for example: "an email login that has existed for at least 60 days will require at least 30 days to be removed, otherwise, it can be removed instantly". This will prevent an attacker from removing the user's email (and locking them out) whilst also preventing them from adding their own email. In addition, notification emails will be sent to the user whenever account settings have been changed.
+
+**🤔What about email greylisting?**
+
+Greylisting also affects passwordful systems. User emails *should always be verified* before allowing the user to do anything of significance. Cierge also supports external logins so using email is not a necessity.
 
 **🤔Why does Cierge handle profile metadata?**
 
@@ -195,7 +204,7 @@ Check out the [ASP.NET Core external authentication guide](https://docs.microsof
 * Unlike PwdLess & Portier, Cierge handles user management, a variety of external logins, and a frontend (more like an SSO).
 * Portier is an email-based authentication server that *only* handles authentication (ie. no user management). 
 Cierge might progressively implement parts of the Portier spec as it develops for standradization.
-* PwdLess is an API-only passwordless authenitcation server that does not implement OIDC, as such it is very easy to pick up
+* PwdLess is an API-only passwordless authentication server that does not implement OIDC, as such it is easier to pick up
 
 ### Get your Cierge project featured
 
