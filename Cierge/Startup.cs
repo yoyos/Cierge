@@ -105,13 +105,10 @@ namespace Cierge
                     options.DisableHttpsRequirement();
 
                 if (Env.IsDevelopment())
-                {
                     options.AddEphemeralSigningKey();
-                }
                 else
-                {
                     options.AddSigningKey(SigningKey);
-                }
+
                 options.UseJsonWebTokens();
             });
 

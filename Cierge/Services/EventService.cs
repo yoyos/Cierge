@@ -45,7 +45,8 @@ namespace Cierge.Services
             if (eventCount == maxEventCount)
             {
                 var oldestEvent = _dbContext.AuthEvents
-                    .Aggregate((agg, next) => next.OccurrenceTime < agg.OccurrenceTime ? next : agg);
+                    .OrderByDescending(e => e.OccurrenceTime)
+                    .Last();
                 _dbContext.Remove(oldestEvent);
             }
 
@@ -64,6 +65,7 @@ namespace Cierge.Services
 
             return _dbContext.AuthEvents
                 .Where(e => e.UserId == user.Id)
+                .OrderBy(e => e.OccurrenceTime)
                 .Take(maxReturned).ToList();
         }
     }
