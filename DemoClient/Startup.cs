@@ -36,12 +36,14 @@ namespace DemoClient
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
-            .AddCookie()
+            .AddCookie(options => {
+                options.SlidingExpiration = true;
+            })
             .AddOpenIdConnect("DemoCierge", options => {
                 options.Authority = "https://cierge.azurewebsites.net";
                 options.ClientId = "client-app";
                 options.ResponseType = OpenIdConnectResponseType.IdTokenToken;
-                options.SaveTokens = true;
+                options.SaveTokens = true; // Make false to reduce cookie size but lose JWTs
                 options.GetClaimsFromUserInfoEndpoint = true;
                 // !! ADDING FIELD: this will include FavColor in included claims   
                 options.ClaimActions.MapUniqueJsonKey("favColor", "favColor");
