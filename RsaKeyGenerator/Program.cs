@@ -5,52 +5,62 @@ namespace RsaKeyGenerator
 {
     class Program
     {
+        private static string _key { get; set; }
+        private static RSACryptoServiceProvider _rsa;
+
+
         static void Main(string[] args)
         {
-            RSACryptoServiceProvider RSA = new RSACryptoServiceProvider(2048);
-
-            string pathPublic;
-            string pathPublicPrivate;
-            if (args.Length > 1)
+            try
             {
-                for (int i = 0; i < args.Length; i++)
+                MakePrivateKey();
+
+                if (args.Length > 1)
                 {
-                    if (args[i].Contains("private"))
-                    {
-                        pathPublicPrivate = args[i + 1];
-                    }
-                    else if (args[i].Contains("public"))
-                    {
-                        pathPublic = args[i + 1];
-                    }
+                    SaveKey(args[0]);
+                }
+                else
+                {
+                    SaveKey(AskSavePath());
+                }
+
+                if (AskPrintKey())
+                {
+                    Console.WriteLine(_key);
+                    Console.ReadKey();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Input path (w/filename) to save the public key to (or leave empty to print) >>>");
-                PrintOrWrite(Console.ReadLine(), RSA.ToJsonString(false));
-
-                Console.WriteLine("Input path (w/filename) to save the public & private keys to (or leave empty to print) >>>");
-                PrintOrWrite(Console.ReadLine(), RSA.ToJsonString(true));
+                Console.WriteLine($"Error:\n{ex.Message}\n");
+                Main(args);
             }
-
-            
         }
 
-        private static void PrintOrWrite(string path, string key)
+        private static void MakePrivateKey()
         {
-            if (String.IsNullOrWhiteSpace(path))
+            _rsa = new RSACryptoServiceProvider(2048);
+            _key = _rsa.ToJsonString(true);
+        }
+
+        private static void SaveKey(string path)
+        {
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(System.IO.File.Create(path)))
             {
-                Console.WriteLine($"\n{key}\n");
+                file.WriteLine(_key);
             }
-            else
-            {
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(System.IO.File.Create(path)))
-                {
-                    file.WriteLine(key);
-                }
-                Console.WriteLine($"Done, wrote key to {path}.");
-            }
+        }
+
+        private static string AskSavePath()
+        {
+            Console.WriteLine("Path to save key to (including filename)? >>>");
+            return Console.ReadLine();
+        }
+
+        private static bool AskPrintKey()
+        {
+            Console.WriteLine("Would you like to print the generated key to terminal now (includes private key)? [y/N] >>>");
+            return Console.ReadLine() == "y";
         }
     }
 }
