@@ -157,7 +157,7 @@ Here's a walkthrough of the configuration required by Cierge:
   },
   "Cierge": {
     "RsaSigningKeyJsonPath": `string: OIDC RSA signing json key path (see RsaKeyGenerator), optional, leave empty to generate`,
-    "Issuer": `string: OIDC issuer, optional, useful if running behind reverse proxy`,
+    "Issuer": `string: OIDC issuer, optional, useful if running behind reverse proxy or using JWTs`,
     "RequireHttps": `boolean: leave off if running behind reverse proxy`,
     "AppName": `string: name of your main website, cosmetic`,
     "AppUrl": `string: url of your main website, cosmetic`,

@@ -41,6 +41,9 @@ namespace Cierge
             // this is running behind a reverse proxy that requires HTTPS
             var requireHttps = !String.IsNullOrWhiteSpace(Configuration["RequireHttps"]) && Boolean.Parse(Configuration["RequireHttps"]) == true;
 
+            // Might need to manually set issuer if running behind reverse proxy or using JWTs
+            var issuer = Configuration["Cierge:Issuer"];
+
             if (requireHttps)
                 services.Configure<MvcOptions>(options =>
                 {
@@ -96,8 +99,6 @@ namespace Cierge
 
                 options.SetAccessTokenLifetime(new TimeSpan(1, 0, 0));
 
-                // Might need to manually set issuer if running behind reverse proxy
-                var issuer = Configuration["Cierge:Issuer"];
                 if (!String.IsNullOrWhiteSpace(issuer))
                     options.SetIssuer(new Uri(issuer));
 
@@ -155,6 +156,9 @@ namespace Cierge
                     };
 
                     options.Audience = Configuration["Cierge:Audience"];
+
+                    if (!String.IsNullOrWhiteSpace(issuer))
+                        options.Authority = issuer;
 
                     if (Env.IsDevelopment())
                         options.RequireHttpsMetadata = false;
