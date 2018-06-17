@@ -11,9 +11,10 @@ using System;
 namespace Cierge.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180617013452_MigrateToOpenIddictRc2")]
+    partial class MigrateToOpenIddictRc2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,20 +220,15 @@ namespace Cierge.Migrations
 
                     b.Property<string>("ClientSecret");
 
-                    b.Property<string>("ConcurrencyToken")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("ConsentType");
-
                     b.Property<string>("DisplayName");
-
-                    b.Property<string>("Permissions");
 
                     b.Property<string>("PostLogoutRedirectUris");
 
-                    b.Property<string>("Properties");
-
                     b.Property<string>("RedirectUris");
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("Type")
                         .IsRequired();
@@ -252,11 +248,6 @@ namespace Cierge.Migrations
 
                     b.Property<string>("ApplicationId");
 
-                    b.Property<string>("ConcurrencyToken")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Properties");
-
                     b.Property<string>("Scopes");
 
                     b.Property<string>("Status")
@@ -264,6 +255,10 @@ namespace Cierge.Migrations
 
                     b.Property<string>("Subject")
                         .IsRequired();
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("Type")
                         .IsRequired();
@@ -280,24 +275,16 @@ namespace Cierge.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ConcurrencyToken")
-                        .IsConcurrencyToken();
-
                     b.Property<string>("Description");
-
-                    b.Property<string>("DisplayName");
 
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<string>("Properties");
-
-                    b.Property<string>("Resources");
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.ToTable("OpenIddictScopes");
                 });
@@ -311,23 +298,22 @@ namespace Cierge.Migrations
 
                     b.Property<string>("AuthorizationId");
 
-                    b.Property<string>("ConcurrencyToken")
-                        .IsConcurrencyToken();
+                    b.Property<string>("Ciphertext");
 
                     b.Property<DateTimeOffset?>("CreationDate");
 
                     b.Property<DateTimeOffset?>("ExpirationDate");
 
-                    b.Property<string>("Payload");
-
-                    b.Property<string>("Properties");
-
-                    b.Property<string>("ReferenceId");
+                    b.Property<string>("Hash");
 
                     b.Property<string>("Status");
 
                     b.Property<string>("Subject")
                         .IsRequired();
+
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("Type")
                         .IsRequired();
@@ -338,7 +324,7 @@ namespace Cierge.Migrations
 
                     b.HasIndex("AuthorizationId");
 
-                    b.HasIndex("ReferenceId")
+                    b.HasIndex("Hash")
                         .IsUnique();
 
                     b.ToTable("OpenIddictTokens");
@@ -408,11 +394,13 @@ namespace Cierge.Migrations
                 {
                     b.HasOne("OpenIddict.Models.OpenIddictApplication", "Application")
                         .WithMany("Tokens")
-                        .HasForeignKey("ApplicationId");
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("OpenIddict.Models.OpenIddictAuthorization", "Authorization")
                         .WithMany("Tokens")
-                        .HasForeignKey("AuthorizationId");
+                        .HasForeignKey("AuthorizationId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

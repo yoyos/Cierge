@@ -11,15 +11,15 @@ using System;
 namespace Cierge.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20171224075917_Working")]
-    partial class Working
+    [Migration("20180617013634_MigrateToOpenIddictRc22")]
+    partial class MigrateToOpenIddictRc22
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
+                .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
             modelBuilder.Entity("Cierge.Data.ApplicationUser", b =>
                 {
@@ -74,8 +74,7 @@ namespace Cierge.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -122,8 +121,7 @@ namespace Cierge.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -222,15 +220,20 @@ namespace Cierge.Migrations
 
                     b.Property<string>("ClientSecret");
 
+                    b.Property<string>("ConcurrencyToken")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("ConsentType");
+
                     b.Property<string>("DisplayName");
+
+                    b.Property<string>("Permissions");
 
                     b.Property<string>("PostLogoutRedirectUris");
 
-                    b.Property<string>("RedirectUris");
+                    b.Property<string>("Properties");
 
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<string>("RedirectUris");
 
                     b.Property<string>("Type")
                         .IsRequired();
@@ -250,6 +253,11 @@ namespace Cierge.Migrations
 
                     b.Property<string>("ApplicationId");
 
+                    b.Property<string>("ConcurrencyToken")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Properties");
+
                     b.Property<string>("Scopes");
 
                     b.Property<string>("Status")
@@ -257,10 +265,6 @@ namespace Cierge.Migrations
 
                     b.Property<string>("Subject")
                         .IsRequired();
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("Type")
                         .IsRequired();
@@ -277,16 +281,24 @@ namespace Cierge.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ConcurrencyToken")
+                        .IsConcurrencyToken();
+
                     b.Property<string>("Description");
+
+                    b.Property<string>("DisplayName");
 
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<string>("Properties");
+
+                    b.Property<string>("Resources");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("OpenIddictScopes");
                 });
@@ -300,22 +312,23 @@ namespace Cierge.Migrations
 
                     b.Property<string>("AuthorizationId");
 
-                    b.Property<string>("Ciphertext");
+                    b.Property<string>("ConcurrencyToken")
+                        .IsConcurrencyToken();
 
                     b.Property<DateTimeOffset?>("CreationDate");
 
                     b.Property<DateTimeOffset?>("ExpirationDate");
 
-                    b.Property<string>("Hash");
+                    b.Property<string>("Payload");
+
+                    b.Property<string>("Properties");
+
+                    b.Property<string>("ReferenceId");
 
                     b.Property<string>("Status");
 
                     b.Property<string>("Subject")
                         .IsRequired();
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("Type")
                         .IsRequired();
@@ -326,9 +339,8 @@ namespace Cierge.Migrations
 
                     b.HasIndex("AuthorizationId");
 
-                    b.HasIndex("Hash")
-                        .IsUnique()
-                        .HasFilter("[Hash] IS NOT NULL");
+                    b.HasIndex("ReferenceId")
+                        .IsUnique();
 
                     b.ToTable("OpenIddictTokens");
                 });
@@ -397,13 +409,11 @@ namespace Cierge.Migrations
                 {
                     b.HasOne("OpenIddict.Models.OpenIddictApplication", "Application")
                         .WithMany("Tokens")
-                        .HasForeignKey("ApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationId");
 
                     b.HasOne("OpenIddict.Models.OpenIddictAuthorization", "Authorization")
                         .WithMany("Tokens")
-                        .HasForeignKey("AuthorizationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AuthorizationId");
                 });
 #pragma warning restore 612, 618
         }

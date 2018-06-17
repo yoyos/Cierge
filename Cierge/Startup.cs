@@ -16,9 +16,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Rewrite;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Cierge
 {
@@ -54,10 +52,7 @@ namespace Cierge
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                if (Env.IsDevelopment())
-                    options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
-                else
-                    options.UseNpgsql(Configuration["ConnectionStrings:DefaultConnection"]);
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
 
                 options.UseOpenIddict();
             });
@@ -196,8 +191,8 @@ namespace Cierge
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
         }
+
         public RSAParameters GetRsaSigningKey()
         {
             var path = Configuration["Cierge:RsaSigningKeyJsonPath"];
