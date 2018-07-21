@@ -108,6 +108,19 @@ Guides:
 * [Docker guide](https://docs.microsoft.com/en-us/aspnet/core/publishing/docker)
 * [More on .NET Core deployment](https://docs.microsoft.com/en-us/dotnet/core/deploying/)
 
+Here's the minimum you'll need to do to get Cierge running:
+```bash
+git clone https://github.com/PwdLess/Cierge.git
+cd Cierge/Cierge
+# edit appsettings.json with the correct connection string
+rm -r Cierge/Migrations # Removed existing migrations
+dotnet ef migrations add initial
+dotnet ef database update
+dotnet run # 🎉
+```
+
+(Note how you'll need to [remove any existing migrations and make your own](https://github.com/PwdLess/Cierge/issues/27) before starting Cierge).
+
 There is also a [sample Dockerfile](/Dockerfile). 
 For a more complete example on how you'd use Cierge in a multicontianer docker project, check out [Docker Starter](https://github.com/Biarity/DockerStarter).
 
