@@ -54,8 +54,8 @@ namespace Cierge
             {
 	            if (Env.IsDevelopment())
 		            options.UseInMemoryDatabase("cierge");
-				else
-					options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+	            else
+		            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
 
                 options.UseOpenIddict();
             });
