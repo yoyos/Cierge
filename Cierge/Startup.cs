@@ -52,7 +52,10 @@ namespace Cierge
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+	            if (Env.IsDevelopment())
+		            options.UseInMemoryDatabase("cierge");
+				else
+					options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
 
                 options.UseOpenIddict();
             });
