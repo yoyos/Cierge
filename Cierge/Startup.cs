@@ -52,7 +52,7 @@ namespace Cierge
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-	            if (Env.IsDevelopment())
+	            if (Env.IsDevelopment() && bool.TryParse(Configuration["Cierge:InMemoryDb"], out var inMemoryDb) && inMemoryDb )
 		            options.UseInMemoryDatabase("cierge");
 	            else
 		            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
