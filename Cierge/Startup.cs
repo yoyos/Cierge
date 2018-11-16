@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +17,9 @@ using System.IO;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
+using OpenIddict;
+using OpenIddict.Core;
+using OpenIddict.EntityFrameworkCore;
 
 namespace Cierge
 {
@@ -52,7 +55,8 @@ namespace Cierge
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(configuration["Data:DefaultConnection:ConnectionString"]);
+ //               options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
 
                 options.UseOpenIddict();
             });
@@ -79,9 +83,64 @@ namespace Cierge
             {
                 options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
                 options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
-                options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
+           //     options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
             });
 
+		 // Register the OpenIddict services.
+    services.AddOpenIddict()
+        .AddCore(options =>
+        {
+            // Configure OpenIddict to use the Entity Framework Core stores and entities.
+            options.UseEntityFrameworkCore()
+                   .UseDbContext<ApplicationDbContext>();
+        });
+
+// In OpenIddict RC3, the options are now split into 3 categories:
+// the core services, the server services and the validation services.
+services.AddOpenIddict()
+    .AddCore(options =>
+    {
+        // AddEntityFrameworkCoreStores() is now UseEntityFrameworkCore().
+        options.UseEntityFrameworkCore()
+               .UseDbContext<ApplicationDbContext>();
+    })
+
+    .AddServer(options =>
+    {
+        // AddMvcBinders() is now UseMvc().
+        options.UseMvc();
+
+        options.EnableAuthorizationEndpoint("/connect/authorize")
+               .EnableLogoutEndpoint("/connect/logout")
+               .EnableTokenEndpoint("/connect/token")
+               .EnableUserinfoEndpoint("/api/userinfo");
+
+        options.AllowAuthorizationCodeFlow()
+               .AllowPasswordFlow()
+               .AllowRefreshTokenFlow();
+
+        options.RegisterScopes(OpenIdConnectConstants.Scopes.Email,
+                               OpenIdConnectConstants.Scopes.Profile,
+				OpenIdConnectConstants.Scopes.OfflineAccess,
+                             	OpenIdConnectConstants.Scopes.OpenId);
+
+        // This API was removed as client identification is now
+        // required by default. You can remove or comment this line.
+        //
+        // options.RequireClientIdentification();
+
+        options.EnableRequestCaching();
+
+        // This API was removed as scope validation is now enforced
+        // by default. You can safely remove or comment this line.
+        //
+        // options.EnableScopeValidation();
+
+        options.DisableHttpsRequirement();
+    });
+
+
+/*
             services.AddOpenIddict(options =>
             {
                 options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
@@ -107,7 +166,7 @@ namespace Cierge
 
                 options.UseJsonWebTokens();
             });
-
+*/
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
@@ -179,6 +238,7 @@ namespace Cierge
                 app.UseExceptionHandler("/Home/Error");
             }
 
+	
             app.UseCors("AllowSpecificOrigin");
 
             app.UseStaticFiles();

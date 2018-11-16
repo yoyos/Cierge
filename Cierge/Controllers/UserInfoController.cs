@@ -59,7 +59,7 @@ namespace AuthorizationServer.Controllers
                 claims[OpenIdConnectConstants.Claims.PhoneNumberVerified] = await _userManager.IsPhoneNumberConfirmedAsync(user);
             }
 
-            if (User.HasClaim(OpenIdConnectConstants.Claims.Scope, OpenIddictConstants.Scopes.Roles))
+            if (User.HasClaim(OpenIdConnectConstants.Claims.Scope, "Roles"))
             {
                 claims["roles"] = JArray.FromObject(await _userManager.GetRolesAsync(user));
             }
