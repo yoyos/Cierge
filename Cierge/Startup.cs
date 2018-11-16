@@ -21,160 +21,159 @@ using OpenIddict;
 using OpenIddict.Core;
 using OpenIddict.EntityFrameworkCore;
 
-namespace Cierge {
-    public class Startup {
-        public Startup (IConfiguration configuration, IHostingEnvironment env) {
+namespace Cierge
+{
+    public class Startup
+    {
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        {
             Configuration = configuration;
             Env = env;
-            SigningKey = new RsaSecurityKey (GetRsaSigningKey ());
+            SigningKey = new RsaSecurityKey(GetRsaSigningKey());
         }
 
         public IConfiguration Configuration { get; }
         public IHostingEnvironment Env { get; }
         public SecurityKey SigningKey { get; }
 
-        public void ConfigureServices (IServiceCollection services) {
+        public void ConfigureServices(IServiceCollection services)
+        {
             // Disabling HTTPS requirement is default since it is assumed that
             // this is running behind a reverse proxy that requires HTTPS
-            var requireHttps = !String.IsNullOrWhiteSpace (Configuration["RequireHttps"]) && Boolean.Parse (Configuration["RequireHttps"]) == true;
+            var requireHttps = !String.IsNullOrWhiteSpace(Configuration["RequireHttps"]) && Boolean.Parse(Configuration["RequireHttps"]) == true;
 
             // Might need to manually set issuer if running behind reverse proxy or using JWTs
             var issuer = Configuration["Cierge:Issuer"];
 
             if (requireHttps)
-                services.Configure<MvcOptions> (options => {
-                    options.Filters.Add (new RequireHttpsAttribute ());
+                services.Configure<MvcOptions>(options =>
+                {
+                    options.Filters.Add(new RequireHttpsAttribute());
                 });
 
-            services.AddMvc ();
+            services.AddMvc();
 
-            services.AddDbContext<ApplicationDbContext> (options => {
-                options.UseSqlServer (Configuration.GetConnectionString ("DefaultConnection"));
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseInMemoryDatabase("ApplicationDbContext");
 
-                /*
-                    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
-                */
-                options.UseOpenIddict ();
+                //   options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+
+                options.UseOpenIddict();
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole> (options => {
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+                {
                     options.Lockout.AllowedForNewUsers = true;
                     options.User.RequireUniqueEmail = false;
                 })
-                .AddEntityFrameworkStores<ApplicationDbContext> ()
-                .AddDefaultTokenProviders ();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
-            if (!String.IsNullOrWhiteSpace (Configuration["ExternalAuth:Google:ClientId"])) {
-                services.AddAuthentication ().AddGoogle (googleOptions => {
+            if (!String.IsNullOrWhiteSpace(Configuration["ExternalAuth:Google:ClientId"]))
+            {
+                services.AddAuthentication().AddGoogle(googleOptions =>
+                {
                     googleOptions.ClientId = Configuration["ExternalAuth:Google:ClientId"];
                     googleOptions.ClientSecret = Configuration["ExternalAuth:Google:ClientSecret"];
                 });
             }
 
-            services.Configure<IdentityOptions> (options => {
+            services.Configure<IdentityOptions>(options =>
+            {
                 options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
                 options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
-                //     options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
+                options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
             });
 
             // Register the OpenIddict services.
-            services.AddOpenIddict ()
-                .AddCore (options => {
-                    // Configure OpenIddict to use the Entity Framework Core stores and entities.
-                    options.UseEntityFrameworkCore ()
-                        .UseDbContext<ApplicationDbContext> ();
+            services.AddOpenIddict()
+                .AddCore(options =>
+                {
+                    options.UseEntityFrameworkCore()
+                        .UseDbContext<ApplicationDbContext>();
                 });
 
-            // In OpenIddict RC3, the options are now split into 3 categories:
-            // the core services, the server services and the validation services.
-            services.AddOpenIddict ()
-                .AddCore (options => {
-                    // AddEntityFrameworkCoreStores() is now UseEntityFrameworkCore().
-                    options.UseEntityFrameworkCore ()
-                        .UseDbContext<ApplicationDbContext> ();
+            services.AddOpenIddict()
+                .AddCore(options =>
+                {
+                    options.UseEntityFrameworkCore().UseDbContext<ApplicationDbContext>();
                 })
+                .AddServer(options =>
+                {
+                    options.UseMvc();
 
-                .AddServer (options => {
-                    options.UseMvc ();
+                    options.UseJsonWebTokens();
 
-                    options.EnableAuthorizationEndpoint ("/connect/authorize")
-                        .EnableLogoutEndpoint ("/connect/logout")
-                        .EnableTokenEndpoint ("/connect/token")
-                        .EnableUserinfoEndpoint ("/api/userinfo");
+                    options.EnableAuthorizationEndpoint("/connect/authorize")
+                        .EnableLogoutEndpoint("/connect/logout")
+                        .EnableTokenEndpoint("/connect/token")
+                        .EnableUserinfoEndpoint("/api/userinfo")
+                        .EnableIntrospectionEndpoint("/api/introspect");
 
-                    options.AllowAuthorizationCodeFlow ()
-                        .AllowPasswordFlow ()
-                        .AllowRefreshTokenFlow ();
+                    options.AllowAuthorizationCodeFlow()
+                        .AllowPasswordFlow()
+                        .AllowRefreshTokenFlow();
 
-                    options.RegisterScopes (OpenIdConnectConstants.Scopes.Email,
+                    options.RegisterScopes(
+                        //OpenIdConnectConstants.Scopes.OpenId,
+                        OpenIdConnectConstants.Scopes.Email,
                         OpenIdConnectConstants.Scopes.Profile,
-                        OpenIdConnectConstants.Scopes.OfflineAccess,
-                        OpenIdConnectConstants.Scopes.OpenId);
+                        //OpenIdConnectConstants.Scopes.OfflineAccess,
+                        OpenIddictConnectConstants.Scopes.Roles
+                    );
 
-                    if (!String.IsNullOrWhiteSpace (issuer))
-                        options.SetIssuer (new Uri (issuer));
+                    if (!String.IsNullOrWhiteSpace(issuer))
+                        options.SetIssuer(new Uri(issuer));
 
                     if (!requireHttps)
-                        options.DisableHttpsRequirement ();
+                        options.DisableHttpsRequirement();
 
-                    if (Env.IsDevelopment ())
-                        options.AddEphemeralSigningKey ();
+                    if (Env.IsDevelopment())
+                        options.AddEphemeralSigningKey();
                     else
-                        options.AddSigningKey (SigningKey);
+                        options.AddSigningKey(SigningKey);
 
-                    options.EnableRequestCaching ();
-
-                    options.UseJsonWebTokens ();
+                    options.EnableRequestCaching();
 
                 });
 
-            /*
-                        services.AddOpenIddict(options =>
-                        {
-                            options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
-                            options.AddMvcBinders();
-                            options.EnableAuthorizationEndpoint("/connect/authorize")
-                                   .EnableLogoutEndpoint("/connect/logout")
-                                   .EnableIntrospectionEndpoint("/connect/introspect")
-                                   .EnableUserinfoEndpoint("/api/userinfo");
-                            options.AllowImplicitFlow();
-
-                            options.SetAccessTokenLifetime(new TimeSpan(1, 0, 0));
-
-
-                            options.UseJsonWebTokens();
-                        });
-            */
-            services.AddCors (options => {
-                options.AddPolicy ("AllowSpecificOrigin",
-                    builder => builder.WithOrigins ("http://localhost:8000")
-                    .AllowAnyMethod ()
-                    .AllowAnyHeader ());
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin", builder => builder.WithOrigins("http://localhost:8000")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
             });
 
-            if (Env.IsDevelopment ()) {
-                services.AddTransient<IEmailSender, DevMessageSender> ();
-                services.AddTransient<ISmsSender, DevMessageSender> ();
-            } else {
-                services.AddScoped<IEmailSender, SmtpMessageSender> ();
+            if (Env.IsDevelopment())
+            {
+                services.AddTransient<IEmailSender, DevMessageSender>();
+                services.AddTransient<ISmsSender, DevMessageSender>();
+            }
+            else
+            {
+                services.AddScoped<IEmailSender, SmtpMessageSender>();
             }
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor> ();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddScoped<ValidateRecaptchaAttribute> ();
+            services.AddScoped<ValidateRecaptchaAttribute>();
 
-            services.AddScoped<NoticeService> ();
+            services.AddScoped<NoticeService>();
 
-            services.AddScoped<EventsService> ();
+            services.AddScoped<EventsService>();
 
             // Allow JWT bearer authentication (for API calls)
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear ();
-            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear ();
-            services.AddAuthentication (options => {
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
+            services.AddAuthentication(options =>
+                {
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
-                .AddJwtBearer (options => {
-                    options.TokenValidationParameters = new TokenValidationParameters {
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
                     ValidateIssuer = false, // TODO: make configurable
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = SigningKey
@@ -182,71 +181,83 @@ namespace Cierge {
 
                     options.Audience = Configuration["Cierge:Audience"];
 
-                    if (!String.IsNullOrWhiteSpace (issuer))
+                    if (!String.IsNullOrWhiteSpace(issuer))
                         options.Authority = issuer;
 
-                    if (Env.IsDevelopment ())
+                    if (Env.IsDevelopment())
                         options.RequireHttpsMetadata = false;
                 });
 
             // Allow cross-site cookies 
-            services.ConfigureApplicationCookie (options => {
+            services.ConfigureApplicationCookie(options =>
+            {
                 options.Cookie.SameSite = SameSiteMode.None;
             });
         }
 
-        public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
-            if (env.IsDevelopment ()) {
-                app.UseDeveloperExceptionPage ();
-                app.UseBrowserLink ();
-                app.UseDatabaseErrorPage ();
-            } else {
-                app.UseExceptionHandler ("/Home/Error");
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseCors ("AllowSpecificOrigin");
+            app.UseCors("AllowSpecificOrigin");
 
-            app.UseStaticFiles ();
+            app.UseStaticFiles();
 
-            app.UseAuthentication ();
+            app.UseAuthentication();
 
-            app.UseMvc (routes => {
-                routes.MapRoute (
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 
-        public RSAParameters GetRsaSigningKey () {
+        public RSAParameters GetRsaSigningKey()
+        {
             var path = Configuration["Cierge:RsaSigningKeyJsonPath"];
             RSAParameters parameters;
 
-            if (!String.IsNullOrWhiteSpace (path) && File.Exists (path)) {
+            if (!String.IsNullOrWhiteSpace(path) && File.Exists(path))
+            {
                 // Get RSA JSON from file
                 string jsonString;
-                FileStream fileStream = new FileStream (path, FileMode.Open);
-                using (StreamReader reader = new StreamReader (fileStream)) {
-                    jsonString = reader.ReadToEnd ();
+                FileStream fileStream = new FileStream(path, FileMode.Open);
+                using(StreamReader reader = new StreamReader(fileStream))
+                {
+                    jsonString = reader.ReadToEnd();
                 }
 
-                dynamic paramsJson = JsonConvert.DeserializeObject (jsonString);
+                dynamic paramsJson = JsonConvert.DeserializeObject(jsonString);
 
-                parameters = new RSAParameters {
-                    Modulus = paramsJson.Modulus != null ? Convert.FromBase64String (paramsJson.Modulus.ToString ()) : null,
-                    Exponent = paramsJson.Exponent != null ? Convert.FromBase64String (paramsJson.Exponent.ToString ()) : null,
-                    P = paramsJson.P != null ? Convert.FromBase64String (paramsJson.P.ToString ()) : null,
-                    Q = paramsJson.Q != null ? Convert.FromBase64String (paramsJson.Q.ToString ()) : null,
-                    DP = paramsJson.DP != null ? Convert.FromBase64String (paramsJson.DP.ToString ()) : null,
-                    DQ = paramsJson.DQ != null ? Convert.FromBase64String (paramsJson.DQ.ToString ()) : null,
-                    InverseQ = paramsJson.InverseQ != null ? Convert.FromBase64String (paramsJson.InverseQ.ToString ()) : null,
-                    D = paramsJson.D != null ? Convert.FromBase64String (paramsJson.D.ToString ()) : null
+                parameters = new RSAParameters
+                {
+                    Modulus = paramsJson.Modulus != null ? Convert.FromBase64String(paramsJson.Modulus.ToString()) : null,
+                    Exponent = paramsJson.Exponent != null ? Convert.FromBase64String(paramsJson.Exponent.ToString()) : null,
+                    P = paramsJson.P != null ? Convert.FromBase64String(paramsJson.P.ToString()) : null,
+                    Q = paramsJson.Q != null ? Convert.FromBase64String(paramsJson.Q.ToString()) : null,
+                    DP = paramsJson.DP != null ? Convert.FromBase64String(paramsJson.DP.ToString()) : null,
+                    DQ = paramsJson.DQ != null ? Convert.FromBase64String(paramsJson.DQ.ToString()) : null,
+                    InverseQ = paramsJson.InverseQ != null ? Convert.FromBase64String(paramsJson.InverseQ.ToString()) : null,
+                    D = paramsJson.D != null ? Convert.FromBase64String(paramsJson.D.ToString()) : null
                 };
 
-            } else {
+            }
+            else
+            {
                 // Generate RSA key
-                RSACryptoServiceProvider RSA = new RSACryptoServiceProvider (2048);
+                RSACryptoServiceProvider RSA = new RSACryptoServiceProvider(2048);
 
-                parameters = RSA.ExportParameters (true);
+                parameters = RSA.ExportParameters(true);
             }
 
             return parameters;
