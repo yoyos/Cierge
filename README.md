@@ -168,7 +168,7 @@ Here's a walkthrough of the configuration required by Cierge:
     "RandomizeFrom": `boolean: allow addition of random characters before the @ symbol - see issue #18`
   },
   "Cierge": {
-    "DatabaseProvider": `string: Database provider to use (InMemory, MSSQL, PostgreSQL, SQLite, and MySQL), InMemory supported only in "Development" environment`,
+    "DatabaseProvider": `string: Database provider to use (MSSQL, PostgreSQL, SQLite, and MySQL)`,
     "RsaSigningKeyJsonPath": `string: OIDC RSA signing json key path (see RsaKeyGenerator), optional, leave empty to generate`,
     "Issuer": `string: OIDC issuer, optional, useful if running behind reverse proxy or using JWTs`,
     "RequireHttps": `boolean: leave off if running behind reverse proxy`,
@@ -176,7 +176,7 @@ Here's a walkthrough of the configuration required by Cierge:
     "AppUrl": `string: url of your main website, cosmetic`,
     "Audience": `string: "aud" claim in tokens, required",
     "BeNice": `boolean: display "Powered by Cierge"`,
-    "InMemoryDb": `boolean: overrides DatabaseProvider when set to true in a "Development" (appsettings.Development.json) environment`,
+    "InMemoryDb": `boolean: use in-memory development DB, overrides DatabaseProvider when set to true`,
     "Events": {
       "MaxStored": `number: maximum number of events stored (default 50)`,
       "MaxReturned": `number: maximum number of events displayed per user (default 10)`
