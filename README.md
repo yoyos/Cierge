@@ -146,8 +146,7 @@ Here's a walkthrough of the configuration required by Cierge:
 {
   "ConnectionStrings": {
     "DefaultConnection": `string: a PostgreSQL connection string.
-	                 [Using a different database provider](https://docs.microsoft.com/en-us/ef/core/providers/).
-			 Don't forget to apply database migrations [`dotnet ef database update`](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/).`
+                          Don't forget to apply database migrations [`dotnet ef database update`](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/).`
   },
   "Recaptcha": {
     "Secret": `string: reCAPTCHA secret, required`,
@@ -169,6 +168,7 @@ Here's a walkthrough of the configuration required by Cierge:
     "RandomizeFrom": `boolean: allow addition of random characters before the @ symbol - see issue #18`
   },
   "Cierge": {
+    "DatabaseProvider": `string: Database provider to use. Valid options are InMemory, MSSQL, PostgreSQL, and SQLite (case-insensitive).`,
     "RsaSigningKeyJsonPath": `string: OIDC RSA signing json key path (see RsaKeyGenerator), optional, leave empty to generate`,
     "Issuer": `string: OIDC issuer, optional, useful if running behind reverse proxy or using JWTs`,
     "RequireHttps": `boolean: leave off if running behind reverse proxy`,
@@ -176,6 +176,7 @@ Here's a walkthrough of the configuration required by Cierge:
     "AppUrl": `string: url of your main website, cosmetic`,
     "Audience": `string: "aud" claim in tokens, required",
     "BeNice": `boolean: display "Powered by Cierge"`,
+    "InMemoryDb": `boolean: overrides DatabaseProvider when set to true in a "Development" (appsettings.Development.json) environment`,
     "Events": {
       "MaxStored": `number: maximum number of events stored (default 50)`,
       "MaxReturned": `number: maximum number of events displayed per user (default 10)`
