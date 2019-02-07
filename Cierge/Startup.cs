@@ -1,6 +1,7 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using AspNet.Security.OpenIdConnect.Primitives;
 using Cierge.Data;
@@ -55,10 +56,33 @@ namespace Cierge
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-	            if (Env.IsDevelopment() && bool.TryParse(Configuration["Cierge:InMemoryDb"], out var inMemoryDb) && inMemoryDb )
-		            options.UseInMemoryDatabase("ApplicationDbContext");
-	            else
-		            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+                var dbProviderStr = Configuration["Cierge:DatabaseProvider"];
+                if (!Enum.TryParse(
+                    value: dbProviderStr,
+                    result: out DatabaseProvider provider,
+                    ignoreCase: true))
+                {
+                    var values = ((DatabaseProvider[])Enum.GetValues(typeof(DatabaseProvider)))
+                        .Select(x => x.ToString())
+                        .Aggregate((a, b) => $"{a}\n{b}");
+                    throw new ArgumentException("Unable to determine database provider. Use one of:\n{values}");
+                }
+
+                if ((Env.IsDevelopment() && bool.TryParse(Configuration["Cierge:InMemoryDb"], out var inMemoryDb) && inMemoryDb) || provider == DatabaseProvider.InMemory)
+                {
+                    options.UseInMemoryDatabase("ApplicationDbContext");
+                }
+                else
+                {
+                    var connectionString = Configuration.GetConnectionString("DefaultConnection");
+                    switch (provider)
+                    {
+                        case DatabaseProvider.MSSQL: options.UseSqlServer(connectionString); break;
+                        case DatabaseProvider.PostgreSQL: options.UseNpgsql(connectionString); break;
+                        case DatabaseProvider.SQLite: options.UseSqlite(connectionString); break;
+                        default: throw new ArgumentOutOfRangeException(nameof(provider), provider, $"{provider} is not supported.");
+                    }
+                }
 
                 options.UseOpenIddict();
             });
