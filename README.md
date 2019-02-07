@@ -168,7 +168,7 @@ Here's a walkthrough of the configuration required by Cierge:
     "RandomizeFrom": `boolean: allow addition of random characters before the @ symbol - see issue #18`
   },
   "Cierge": {
-    "DatabaseProvider": `string: Database provider to use. Valid options are InMemory, MSSQL, PostgreSQL, SQLite, and MySQL (case-insensitive).`,
+    "DatabaseProvider": `string: Database provider to use (InMemory, MSSQL, PostgreSQL, SQLite, and MySQL), InMemory supported only in "Development" environment`,
     "RsaSigningKeyJsonPath": `string: OIDC RSA signing json key path (see RsaKeyGenerator), optional, leave empty to generate`,
     "Issuer": `string: OIDC issuer, optional, useful if running behind reverse proxy or using JWTs`,
     "RequireHttps": `boolean: leave off if running behind reverse proxy`,

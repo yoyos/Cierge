@@ -71,8 +71,9 @@ namespace Cierge
                 provider = string.IsNullOrWhiteSpace(dbProviderStr) ? DatabaseProvider.PostgreSQL : provider;
 
                 // Cierge:InMemoryDb overrides provider when set to 'true' in the dev environment
-                if ((Env.IsDevelopment() && bool.TryParse(Configuration["Cierge:InMemoryDb"], out var inMemoryDb) && inMemoryDb) ||
-                     provider == DatabaseProvider.InMemory)
+                // InMemory database provider is only supported in the dev environment
+                if (Env.IsDevelopment() && 
+                    ((bool.TryParse(Configuration["Cierge:InMemoryDb"], out var inMemoryDb) && inMemoryDb) || provider == DatabaseProvider.InMemory))
                 {
                     options.UseInMemoryDatabase("ApplicationDbContext");
                 }
