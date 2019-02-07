@@ -84,6 +84,7 @@ namespace Cierge
                         case DatabaseProvider.MSSQL: options.UseSqlServer(connectionString); break;
                         case DatabaseProvider.PostgreSQL: options.UseNpgsql(connectionString); break;
                         case DatabaseProvider.SQLite: options.UseSqlite(connectionString); break;
+                        case DatabaseProvider.MySQL: options.UseMySQL(connectionString); break;
                         default: throw new ArgumentOutOfRangeException(nameof(provider), provider, $"{provider} is not supported.");
                     }
                 }

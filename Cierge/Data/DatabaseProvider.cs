@@ -3,5 +3,6 @@ enum DatabaseProvider
     InMemory,
     MSSQL,
     PostgreSQL,
-    SQLite
+    SQLite,
+    MySQL
 }
