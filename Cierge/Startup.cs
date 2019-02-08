@@ -1,6 +1,7 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using AspNet.Security.OpenIdConnect.Primitives;
 using Cierge.Data;
@@ -55,10 +56,38 @@ namespace Cierge
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-	            if (Env.IsDevelopment() && bool.TryParse(Configuration["Cierge:InMemoryDb"], out var inMemoryDb) && inMemoryDb )
-		            options.UseInMemoryDatabase("ApplicationDbContext");
-	            else
-		            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+                var dbProviderStr = Configuration["Cierge:DatabaseProvider"];
+                var provider = DatabaseProvider.PostgreSQL;
+                if (!string.IsNullOrWhiteSpace(dbProviderStr) && 
+                    !Enum.TryParse(value: dbProviderStr, result: out provider, ignoreCase: true))
+                {
+                    var values = ((DatabaseProvider[])Enum.GetValues(typeof(DatabaseProvider)))
+                        .Select(x => x.ToString())
+                        .Aggregate((a, b) => $"{a}\n{b}");
+                    throw new ArgumentException($"Unable to determine database provider. Use one of:\n{values}");
+                }
+
+                // default to PostgreSQL provider
+                provider = string.IsNullOrWhiteSpace(dbProviderStr) ? DatabaseProvider.PostgreSQL : provider;
+
+                // Cierge:InMemoryDb overrides provider when set to 'true' in the dev environment
+                // InMemory database provider is only supported in the dev environment
+                if (Env.IsDevelopment() && (bool.TryParse(Configuration["Cierge:InMemoryDb"], out var inMemoryDb) && inMemoryDb))
+                {
+                    options.UseInMemoryDatabase("ApplicationDbContext");
+                }
+                else
+                {
+                    var connectionString = Configuration.GetConnectionString("DefaultConnection");
+                    switch (provider)
+                    {
+                        case DatabaseProvider.MSSQL: options.UseSqlServer(connectionString); break;
+                        case DatabaseProvider.PostgreSQL: options.UseNpgsql(connectionString); break;
+                        case DatabaseProvider.SQLite: options.UseSqlite(connectionString); break;
+                        case DatabaseProvider.MySQL: options.UseMySql(connectionString); break;
+                        default: throw new ArgumentOutOfRangeException(nameof(provider), provider, $"{provider} is not supported.");
+                    }
+                }
 
                 options.UseOpenIddict();
             });
