@@ -245,6 +245,7 @@ namespace Cierge
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
             app.UseCors("AllowSpecificOrigin");
@@ -252,7 +253,7 @@ namespace Cierge
             app.UseStaticFiles();
 
             app.UseAuthentication();
-
+            app.UseHttpsRedirection();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
