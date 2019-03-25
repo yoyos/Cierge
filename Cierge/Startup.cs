@@ -109,6 +109,15 @@ namespace Cierge
                 });
             }
 
+            if (!String.IsNullOrWhiteSpace(Configuration["ExternalAuth:Facebook:ClientId"]))
+            {
+                services.AddAuthentication().AddFacebook(facebookOptions =>
+                {
+                    facebookOptions.ClientId = Configuration["ExternalAuth:Facebook:ClientId"];
+                    facebookOptions.ClientSecret = Configuration["ExternalAuth:Facebook:ClientSecret"];
+                });
+            }
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
