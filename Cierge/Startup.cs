@@ -41,7 +41,7 @@ namespace Cierge
         {
             // Disabling HTTPS requirement is default since it is assumed that
             // this is running behind a reverse proxy that requires HTTPS
-            var requireHttps = !String.IsNullOrWhiteSpace(Configuration["RequireHttps"]) && Boolean.Parse(Configuration["RequireHttps"]) == true;
+            var requireHttps = !String.IsNullOrWhiteSpace(Configuration["Cierge:RequireHttps"]) && Boolean.Parse(Configuration["Cierge:RequireHttps"]) == true;
 
             // Might need to manually set issuer if running behind reverse proxy or using JWTs
             var issuer = Configuration["Cierge:Issuer"];
@@ -235,6 +235,15 @@ namespace Cierge
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.Use((context, next) =>
+            {
+                if (context.Request.Headers["x-forwarded-proto"] == "https")
+                {
+                    context.Request.Scheme = "https";
+                }
+                return next();
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -246,6 +255,9 @@ namespace Cierge
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            
+
 
             app.UseCors("AllowSpecificOrigin");
 

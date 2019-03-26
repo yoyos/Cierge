@@ -4,6 +4,7 @@
 # ASP.NET Core appsettings
 appsettings.Development.json
 appsettings.Production.json
+Cierge/appsettings.json
 
 # User-specific files
 *.suo
