@@ -153,7 +153,6 @@ namespace Cierge
                     options.AllowAuthorizationCodeFlow()
                         .AllowPasswordFlow()
                         .AllowRefreshTokenFlow();
-
                     options.RegisterScopes(
                         //OpenIdConnectConstants.Scopes.OpenId,
                         OpenIdConnectConstants.Scopes.Email,
@@ -253,7 +252,7 @@ namespace Cierge
             app.UseStaticFiles();
 
             app.UseAuthentication();
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
