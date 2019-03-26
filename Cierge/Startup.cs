@@ -235,15 +235,6 @@ namespace Cierge
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.Use((context, next) =>
-            {
-                if (context.Request.Headers["x-forwarded-proto"] == "https")
-                {
-                    context.Request.Scheme = "https";
-                }
-                return next();
-            });
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -253,7 +244,6 @@ namespace Cierge
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
             }
 
             
@@ -264,7 +254,7 @@ namespace Cierge
             app.UseStaticFiles();
 
             app.UseAuthentication();
-            //app.UseHttpsRedirection();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
