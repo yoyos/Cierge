@@ -235,14 +235,14 @@ namespace Cierge
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.Use((context, next) =>
+            /*app.Use((context, next) =>
             {
                 if (context.Request.Headers["x-forwarded-proto"] == "https")
                 {
                     context.Request.Scheme = "https";
                 }
                 return next();
-            });
+            });*/
 
             if (env.IsDevelopment())
             {
