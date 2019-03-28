@@ -28,5 +28,12 @@ namespace Cierge.Controllers
         {
             return View(model);
         }
+
+        [HttpGet]
+        [Route("health")]
+        public IActionResult Health()
+        {
+            return Ok();
+        }
     }
 }

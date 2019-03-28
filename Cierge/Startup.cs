@@ -256,9 +256,6 @@ namespace Cierge
                 app.UseHsts();
             }
 
-            
-
-
             app.UseCors("AllowSpecificOrigin");
 
             app.UseStaticFiles();
@@ -270,6 +267,7 @@ namespace Cierge
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                
             });
         }
 
